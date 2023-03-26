@@ -1,0 +1,48 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  line-height: 1.6;
+  font-size: 18px;
+  background: #323232;
+  color: #bababa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: red;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  width: 100%;
+  height: 50px;
+  color: #585858;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
