@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Date from '@/components/Date'
 
 export default function Project({ allProjectsData }) {
+  const projectsToShow = allProjectsData.filter(({ id }) => !id.startsWith("_"))
   return (
     <Layout title="projects">
       <Head>
@@ -24,12 +25,12 @@ export default function Project({ allProjectsData }) {
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {allProjectsData.length === 0 ? (
+          {projectsToShow.length === 0 ? (
             <li className={utilStyles.listItem} key="no-posts">
               <p>😔 No projects yet...</p>
             </li>
           ) : (
-            allProjectsData.map(({ id, date, title, tags }) => (
+            projectsToShow.map(({ id, date, title, tags }) => (
               <li className={utilStyles.listItem} key={id}>
                 <Link href={`/projects/${id}`}>{title}</Link>
                 <br />

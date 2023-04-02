@@ -46,7 +46,7 @@ export default function Home({ allPostsData }) {
           <br /><br />
           Tech Positions -
           Data Engineering (Data Pipelines, Data Warehousing, Data Lakes, Data Streaming),
-          Back-end Development (APIs, Microservices, Serverless),
+          Back-end Development (APIs, Microservices, Containers),
           Dev-ops (CI/CD, Infrastructure as Code, Kubernetes),
           Video Engineering * (Video Streaming, Video Transcoding, Video Analytics),
           AI/ML * (Recommender Systems, Online Learning, Time Series Analysis).
