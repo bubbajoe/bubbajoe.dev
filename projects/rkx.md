@@ -1,21 +1,28 @@
 ---
-title: 'rkx'
-date: '2023-01-02'
+title: 'RKX - API Gateway'
+date: '2023-04-02'
 ---
 
-# rkx introduction
+# RKX Introduction
 
-rkx is a Module based API Gateway built in Go. It is designed to be a simple, fast, and extensible.
+RKX is a Module based API Gateway built in Go. It is designed to be a simple, fast, and extensible.
 
 - Programmatic Modules in TypeScript or JavaScript
 - Built-in support for:
   - Canary Deployments
-  - 
+  - Versioning
+  - Certification Mappings
+  
+# RKX vs Kong
 
-Using a similar user interface as Kong, rkx utilizes similar high-level concepts as Kong:
+RKX utilizes similar high-level concepts as Kong:
 - Routes
 - Services
-- Modules (kong: Plugins)
+- Modules (Plugins)
+- Clients (Consumers)
 
 New concepts are also introduced:
 - Namespaces
+
+
+I plan to release the first version of rkx at the end of this year. I will be writing a series of blog posts about the design and implementation of rkx and the modules. 

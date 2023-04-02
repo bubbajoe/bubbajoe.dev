@@ -1,8 +1,8 @@
-import Layout from '~/components/layout'
-import { getAllProjectIds, getProjectData } from '../../lib/projects'
+import Layout from '@/components/Layout'
+import { getAllProjectIds, getProjectData } from '@/lib/projects'
 import Head from 'next/head'
-import Date from '~/components/date'
-import utilStyles from '~/styles/utils.module.css'
+import Date from '@/components/Date'
+import utilStyles from '@/styles/utils.module.css'
 
 export default function ProjectEntry({ projectData }) {
   return (

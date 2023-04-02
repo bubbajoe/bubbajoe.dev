@@ -1,11 +1,11 @@
 ---
-title: 'autostream.live'
-date: '2023-01-02'
+title: 'Autostream Live - Cloud Media Streaming'
+date: '2023-04-02'
 ---
 
-# autostream.live introduction
+# Autostream Live introduction
 
-(autostream.live)[https://www.autostream.live/] is a web-tool for managing your media content using the cloud. autostream.live allows you to create live streams on the cloud in many different ways. By creating live streams on the cloud you won't have to worry about unreliable hardware or internet. 
+[autostream.live](https://www.autostream.live/) is a web-tool for managing your media content using the cloud. autostream.live allows you to create live streams on the cloud in many different ways. By creating live streams on the cloud you won't have to worry about unreliable hardware or internet. 
 
 ## Offline Streaming
 

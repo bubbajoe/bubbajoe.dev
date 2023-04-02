@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Script from 'next/script'
 
 import styles from './layout.module.css'
 import utilStyles from '../styles/utils.module.css'
@@ -32,6 +31,7 @@ export default function Layout({ children, title="home", backName="home", backHr
               className={utilStyles.borderCircle}
               height={144}
               width={144}
+              alt='bubbajoe.dev'
             />
         ) : (
           <>
