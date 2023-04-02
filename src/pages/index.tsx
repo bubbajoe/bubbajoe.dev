@@ -36,7 +36,7 @@ export default function Home({ allPostsData }) {
           I have worked on many personal and work projects including: Back-end APIs in Node/Rust/Go to Data Pipelines using AirByte/Cloudquery/Debezium to Front-end using React/NextJS.
         </p>
         <p>
-          <strong>Interests:</strong> Let me seprate my interests in 3 categories: Tech Concepts, Tech Positions, and Personal Interests.
+          <strong>Interests:</strong> Let me separate my interests in 3 categories: Tech Concepts, Tech Positions, and Personal Interests.
           <br /><br />
           Tech Concepts -
           Live Streaming (RTMP, HLS, WebRTC),

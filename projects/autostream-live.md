@@ -5,7 +5,7 @@ date: '2023-04-02'
 
 # Autostream Live introduction
 
-[autostream.live](https://www.autostream.live/) is a web-tool for managing your media content using the cloud. autostream.live allows you to create live streams on the cloud in many different ways. By creating live streams on the cloud you won't have to worry about unreliable hardware or internet. 
+[Autostream.Live](https://www.autostream.live/) is a web-tool for managing your media content using the cloud. Autostream.Live allows you to create live streams on the cloud in many different ways. By creating live streams on the cloud you won't have to worry about unreliable hardware or internet. 
 
 ## Offline Streaming
 
