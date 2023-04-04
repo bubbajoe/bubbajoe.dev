@@ -1,5 +1,5 @@
-import { getAllPostIds } from "../lib/posts";
-import { getAllProjectIds } from "../lib/projects";
+import { getAllPostIds } from "@/lib/posts";
+import { getAllProjectIds } from "@/lib/projects";
 
 function generateSiteMap(posts, projects) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
