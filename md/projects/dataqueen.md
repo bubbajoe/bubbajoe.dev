@@ -9,7 +9,7 @@ DataQueen is a cloud data warehouse built in Rust. It is designed to be a simple
 
 # Motivation
 
-Data Warehouse solutions are expensive and hard to maintain. Depending on the solution you choose, you may need to maintain a cluster of manchines for the database, job manager or query engine. Hadoop, Spark, and Trino are really popular managing. Of course, these are   This is a lot of work and can be expensive. DataQueen aims to solve this problem by providing a simple solution that is easy to maintain and cheap to run.
+Data Warehouse solutions are expensive and hard to maintain. Depending on the solution you choose, you may need to maintain a cluster of machines for the database, job manager or query engine. This is a lot of work and can be expensive. DataQueen aims to solve this problem by providing a simple solution that is easy to maintain and cheap to run.
 
 We wanted to create a data warehouse that you can run directly on your existing object storage data, with little to no data transformations. We also wanted to create a data warehouse that is easy to maintain and cheap to run.
 
