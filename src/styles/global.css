@@ -2,10 +2,11 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: Nerd Font, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.6;
   font-size: 18px;
+
   background: #323232;
   color: #bababa;
 }
@@ -17,6 +18,7 @@ body {
 a {
   color: red;
   text-decoration: none;
+  font-weight: bold;
 }
 
 a:hover {
@@ -50,7 +52,7 @@ footer {
 h1 {
   font-size: 2rem;
   line-height: 1.2;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: -0.05rem;
   margin: 1rem 0;
 }
@@ -77,4 +79,19 @@ h4 {
 h5 {
   font-size: 1rem;
   line-height: 1.6;
+}
+
+@font-face {
+  font-family: "Nerd Font";
+  src: url("/fonts/JetBrainsMonoLightNerd.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Nerd Font";
+  src: url("/fonts/JetBrainsMonoThinNerd.ttf");
+}
+
+p {
+  font-weight: lighter;
 }

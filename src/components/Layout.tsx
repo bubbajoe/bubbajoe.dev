@@ -34,24 +34,28 @@ export default function Layout({ children, title="home", backName="home", backHr
               alt='bubbajoe.dev'
             />
         ) : (
-          <>
-            <Link href={backHref}>
+          <div style={{
+            display: 'flex',
+            justifyContent: "space-between",
+            width: "100%",
+            marginBottom: "2rem"
+          }}>
+          <h2 className={utilStyles.headingLg}>
+            <Link href={backHref} className={utilStyles.colorInherit}>
+              {title} | bubbajoe.dev
+            </Link>
+          </h2>
+            <Link href={"/"}>
               <Image
                 priority
                 src="https://github.com/bubbajoe.png"
                 className={utilStyles.borderCircle}
                 height={82}
                 width={82}
-                
                 alt={backName}
               />
             </Link>
-            <h2 className={utilStyles.headingLg}>
-              <Link href={backHref} className={utilStyles.colorInherit}>
-                {title} | bubbajoe.dev
-              </Link>
-            </h2>
-          </>
+          </div>
         )}
       </header>
       <main>{children}</main>

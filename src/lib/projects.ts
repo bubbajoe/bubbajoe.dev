@@ -4,7 +4,7 @@ import matter from 'gray-matter'
 import { remark } from 'remark'
 import html from 'remark-html'
 
-const projectsDirectory = path.join(process.cwd(), 'projects')
+const projectsDirectory = path.join(process.cwd(), 'md/projects')
 
 type ProjectData = {
   id: string
