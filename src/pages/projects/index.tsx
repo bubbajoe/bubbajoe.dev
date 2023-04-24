@@ -17,9 +17,8 @@ export default function Project({ allProjectsData }) {
           Welcome to my projects page, please check out my projects below.
         </p>
         <p>
-          I am creating this section to track the many projects I start. 
-          Most of the projects here will be closed source most likely and 
-          non-work related.
+          I am creating this section to track the many projects I start, but end up forgetting... 
+          Most of the projects here will be closed source, unless otherwise specified. 
         </p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>

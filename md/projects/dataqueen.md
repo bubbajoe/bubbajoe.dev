@@ -17,11 +17,11 @@ We wanted to create a data warehouse that you can run directly on your existing 
 
 Most data warehouse solutions are built on top of systems where you have to put a lot of thought into whether that solution is the right one for you. You may need to move TBs or PBs of your data, and spend months migrating and setting everything up. DataQueen is easy to integrate; so you can easily integrate DataQueen into your existing infrastructure. If your data is already in object storage and in a parquet (csv and ndjson also supported) format, this will make the integrate almost seamless.
 
-This also means that you can easily remove DataQueen if it doesn't work for you. Also, DataQueen Cloud solution is charges based on the usage of the service. So you don't have to worry about paying if you don't get any value out from DataQueen.
+This also means that you can easily remove DataQueen if it doesn't work for you. DataQueen Cloud solution charges based on the usage of the service. You don't have to worry about paying, if you don't get any value out from DataQueen.
 
 # Performance
 
-Despite the compute layer needed to download the data, parse the data, and run the query, DataQueen is still able to perform well. We have tested DataQueenlocally  on a 50GB dataset and it was able to run a register in 20 seconds and query in ~1.5 seconds. We have also tested DataQueen on a 1GB dataset and it was able to run a register in 1 second and query in ~0.1 seconds.
+Despite the compute layer needing to download the data, parse the data, and run the query, DataQueen is still able to perform extremely well. We have tested DataQueen locally on a 50GB dataset and it was able to run a register in 20 seconds and query (full table scan) in ~1.5 seconds. We have also tested DataQueen on a 1GB dataset and it was able to run a register in 1 second and query (full table scan) in ~0.1 seconds. We are working on releasing benchmarks for DataQueen Cloud.
 
 Depending on what fields need to be accessed, the query time can be signifigantly reduced because of the Apache Arrow columnar format.
 
