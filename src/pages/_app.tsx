@@ -12,6 +12,8 @@ export default function App({ Component, pageProps }) {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
         <link rel="manifest" href="/site.webmanifest"/>
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script>
+        <link rel="preload" as="font" href="/fonts/JetBrainsMonoThinNerd.ttf"/>
+        <link rel="preload" as="font" href="/fonts/JetBrainsMonoLightNerd.ttf"/>
         <Script
           dangerouslySetInnerHTML={{
             __html: `
