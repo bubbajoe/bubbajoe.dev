@@ -1,9 +1,28 @@
 import '@/styles/global.css'
 import Head from 'next/head'
 import Script from 'next/script';
+import { useState, useEffect } from 'react';
+
+  const measurementId = process.env.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID;
 
 export default function App({ Component, pageProps }) {
-  const measurementId = process.env.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID;
+  const [isLoaded, setIsLoaded] = useState(false)
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
+  if (!isLoaded) {
+    return (
+      <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          width: "100vw",
+      }}>
+          <h1>Loading...</h1>
+      </div>
+    )
+  }
   return <>
     <div className='container'>
       <Head>
