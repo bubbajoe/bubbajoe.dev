@@ -1,11 +1,11 @@
 ---
-title: 'RKX - API Gateway (WIP)'
+title: 'DGate - API Gateway'
 date: '2023-04-02'
 ---
 
-# RKX Introduction
+# DGate Introduction
 
-RKX is a dynamic module based API Gateway built in Go. It is designed to be a facile, fast, and flexible.
+DGate (previously called RKX) is a dynamic module based API Gateway built in Go. It is designed to be a facile, fast, and flexible.
 
 Namespaces - usually represents 1 or more domains.
 Routes - which are paths that are triggered when they hit the proxy
@@ -28,19 +28,19 @@ There are 2 types of modules:
 
 # Clustering and Persistence
 
-Currently, RKX doesn't use clustering or automated persistance across multiple nodes yet. Currently, a change needs to be applied to all nodes individually. I plan to add clustering and persistance in the future. 
+Currently, DGate doesn't use clustering or automated persistance across multiple nodes yet. Currently, a change needs to be applied to all nodes individually. I plan to add clustering and persistance in the future. 
 
-# RKX Client - `rkxcli`
+# DGate Client - `dgate-cli`
 
-`rkxcli` is a command line tool for managing RKX resources. I plan to also add the management of RKX instances, viewing RKX logs/stats, and other RKX features.
+`dgate-cli` is a command line tool for managing DGate resources. I plan to also add the management of DGate instances, viewing DGate logs/stats, and other DGate features.
 
 # Conclusion
 
-## RKX vs Kong
+## DGate vs Kong
 
-RKX aims to bring the simplicity of Kong, but the flexibility of building it yourself. 
+DGate aims to bring the simplicity of Kong, but the flexibility of building it yourself. 
 
-Therefore RKX utilizes similar high-level concepts as Kong:
+Therefore DGate utilizes similar high-level concepts as Kong:
 - Routes
 - Services
 - Modules (Plugins)
@@ -52,8 +52,8 @@ While Kong is, hands down, one of the best API Gateways out there, it is not wit
 
 TLDR: lua sucks (unpopular), complex deployment, restart to update plugins, enterprise paywall features and overall, not so flexible.
 
-RKX aims to solve these problems by using JavaScript/TypeScript, with dynamic deployments and by having an internal state management and replication system. This will ensure that RKX is easy to deploy and maintain.
+DGate aims to solve these problems by using JavaScript/TypeScript, with dynamic deployments and by having an internal state management and replication system. This will ensure that DGate is easy to deploy and maintain.
 
 ## Release Plan
 
-I plan to release the first version of rkx at the end of this year (2023). I am currently dogfooding RKX in several of my projects. Prioritizing, deprioritizing, refactoring and testing... I will be writing a series of blog posts about the design and implementation of rkx and the modules.
+I plan to release the first version of dgate at the end of this year (2023). I am currently dogfooding DGate in several of my projects. Prioritizing, deprioritizing, refactoring and testing... I will be writing a series of blog posts about the design and implementation of dgate and the modules.

@@ -13,12 +13,11 @@ Please check out my [projects](/projects) page for more information.
 
 ### Interests
 
-I am usually interested in most technologies I work with, but the following topics are the ones I am most interested in at the moment:
+I am usually interested in most technologies I work with, especially if it's backend, but the following are the ones that I have been recently interested in:
 
-- Data Engineering (Data Pipelines, Data Warehousing, Data Lakes, Data Streaming)
-- Database (Apache Arrow, BadgerDB, Object Storage, [DataQueen](/projects/dataqueen))
-- Back-end Development (APIs, Microservices, Containers)
-- API Gateways (Kong, Traefik, [RKX](/projects/rkx), etc.)
+- Data Engineering (Data Pipelines, Data Warehousing, Data Lakes, Data Streaming, [DataQueen](/projects/dataqueen))
+- Data Storage (BadgerDB, Object Storage, Vector DB)
+- API Gateways/LB (Kong, NGINX, [DGate (by me)](/projects/dgate), etc.)
 - Dev-ops (Github Actions, GitLab CI/CD, Kubernetes, and Terraform.)
 - Ditributed Systems & Consensus (Raft, Paxos, Tempo, etc.)
 - Video Engineering (Video Streaming, Video Transcoding, Video Analytics)
@@ -28,7 +27,7 @@ I am usually interested in most technologies I work with, but the following topi
 ### Hobbies
 
 - 3D Printing (I have a Prusa SL1S)
-- Video Games (Apex Legends mostly...)
-- Drama (Rick and Morty, Snowfall, Breaking Bad, etc.)
-- Music (Rap, Lofi, Jazz, etc.)
+- Video Games (Apex Legends, Rocket League, Overwatch 2)
+- Drama (Rick and Morty, The Boys, Breaking Bad, etc.)
+- Music (Rap/Hip-hop, Lofi, etc.)
 - Eating & Cooking Food! 
