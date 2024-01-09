@@ -7,9 +7,9 @@ date: '2023-04-02'
 
 DGate (previously called RKX) is a dynamic module based API Gateway built in Go. It is designed to be a facile, fast, and flexible.
 
-Namespaces - usually represents 1 or more domains.
+Namespaces - one or more domains/certs.
 Routes - which are paths that are triggered when they hit the proxy
-Services - represents 1 or more URLs (or a module handler)
+Services - one or more URLs (or a module for handling requests)
 Consumer - these represent some way of recognizing the client.
 Modules - scripts that are ran at runtime in particular functions
 
@@ -48,7 +48,7 @@ Therefore DGate utilizes similar high-level concepts as Kong:
 
 ### Why not just use Kong?
 
-While Kong is, hands down, one of the best API Gateways out there, it is not without its flaws. Kong is built in Lua (plugins too), which is a great language, but it is not as popular as JavaScript or TypeScript. This means that it is harder to find developers who are familiar with Lua, and more importantly who are willing to write modules in Lua. Plugins are are not dynamic, so this means it will require a restart, which may be a big issue depending on your setup and also if you want to rollback quickly. Additionally, deploying Kong can be complex, as you may need a database depending on what features you want to use.
+While Kong is, hands down, one of the best API Gateways out there, it is not without its flaws. Kong is built in Lua (plugins too), which is a great language, but it is not as popular as JavaScript or TypeScript. This means that it is harder to find developers who are familiar with Lua, and more importantly, who are willing to write modules in Lua. Plugins cannot be dynamically loaded, meaning it will require a restart, which can be a hassle depending on your setup and uptime requirements, not to mention rollbacks. Additionally, deploying Kong can be complex, as you may need a database depending on what features you want to use.
 
 TLDR: lua sucks (unpopular), complex deployment, restart to update plugins, enterprise paywall features and overall, not so flexible.
 
@@ -56,4 +56,4 @@ DGate aims to solve these problems by using JavaScript/TypeScript, with dynamic 
 
 ## Release Plan
 
-I plan to release the first version of dgate at the end of this year (2023). I am currently dogfooding DGate in several of my projects. Prioritizing, deprioritizing, refactoring and testing... I will be writing a series of blog posts about the design and implementation of dgate and the modules.
+I plan to release the beta version of DGate at the end of this year (2023). I am currently dogfooding DGate in several of my projects. In the process of prioritizing, refactoring and testing; just trying to think of many ways how DGate can/will be used and trying to design the application in a way that is scalable, yes flexible, and easy to use.
