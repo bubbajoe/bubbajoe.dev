@@ -7,6 +7,16 @@ date: '2023-04-02'
 
 DGate (previously called RKX) is a dynamic module based API Gateway built in Go. It is designed to be a facile, fast, and flexible.
 
+# API Gateways
+
+## What are API Gateways?
+
+At the simplest level, API Gateways accept requests from clients and directs them to the appropriate server. 
+
+You may be thinking this sounds similar to a reverse proxy or load balancer. API Gateway are reverse proxies and load balancers, but they funtion at a higher level; usually providing functionalities like dynamically changing the upstream server and the path/domain that clients need to use. Creating or updating this configuration usually doesn't require an update.
+
+# DGate Internals
+
 Namespaces - usually represents 1 or more domains.
 Routes - which are paths that are triggered when they hit the proxy
 Services - represents 1 or more URLs (or a module handler)
