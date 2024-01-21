@@ -1,6 +1,6 @@
 ---
 title: 'DataQueen - Cloud Data Warehouse/Lake Solution'
-date: '2023-04-22'
+created: '2023-04-22'
 ---
 
 # DataQueen Introduction

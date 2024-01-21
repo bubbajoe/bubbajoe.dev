@@ -1,9 +1,16 @@
 import '@/styles/global.css'
+import mermaid from 'mermaid';
 import Head from 'next/head'
 import Script from 'next/script';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 
-  const measurementId = process.env.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID;
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'dark',
+  securityLevel: 'loose',
+})
+
+const measurementId = process.env.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID;
 
 export default function App({ Component, pageProps }) {
   const [isLoaded, setIsLoaded] = useState(false)

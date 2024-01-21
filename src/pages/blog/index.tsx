@@ -1,12 +1,11 @@
 import Head from 'next/head'
 import Layout, { siteTitle } from '../../components/Layout'
 import utilStyles from '../../styles/utils.module.css'
-import { getSortedPostsData } from '../../lib/posts'
+import { getSortedBlogsMetadata } from '../../lib/blogs'
 import Link from 'next/link'
-import Date from '../../components/Date'
+import DateDisplayer from '../../components/DateDisplayer'
 
-export default function Blog({ allPostsData }) {
-  const postsToShow = allPostsData.filter(({ id }) => !id.startsWith("_"))
+export default function Blog({ allBlogsData }) {
   return (
     <Layout title="blog">
       <Head>
@@ -14,7 +13,7 @@ export default function Blog({ allPostsData }) {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>
-          Welcome to my blog, please check out my posts below.
+          Welcome to my blog, please check out my blogs below.
         </p>
         <p>
           I decided to create a blog to track my progress as I learn new 
@@ -22,23 +21,25 @@ export default function Blog({ allPostsData }) {
         </p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <h2 className={utilStyles.headingLg}>Blogs</h2>
         <ul className={utilStyles.list}>
-          {postsToShow.length === 0 ? (
-            <li className={utilStyles.listItem} key="no-posts">
+          {allBlogsData.length === 0 ? (
+            <li className={utilStyles.listItem} key="no-blogs">
               <p>😔 No blogs yet...</p>
             </li>
           ) : (
-            postsToShow.map(({ id, date, title, tags }) => (
+            allBlogsData.map(({ id, created, updated, title, tags }) => (
               <li className={utilStyles.listItem} key={id}>
                 <Link href={`/blog/${id}`}>{title}</Link>
                 <br />
                 <small className={utilStyles.lightText}>
-                  {tags?.map((tag) => (
+                  {tags?.map((tag: string) => (
                     <span key={tag}>{tag}</span>
                   ))}
                   {tags?.length > 0 && " | "}
-                  <Date dateString={date} />
+                  <DateDisplayer label="created" dateString={created} />
+                  {updated && " | "}
+                  <DateDisplayer label="updated" dateString={updated} />
                 </small>
                 <br />
                 <small className={utilStyles.lightText}>
@@ -52,10 +53,10 @@ export default function Blog({ allPostsData }) {
 }
 
 export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
+  const allBlogsData = await getSortedBlogsMetadata()
   return {
     props: {
-      allPostsData
+      allBlogsData
     }
   }
 }

@@ -1,10 +1,17 @@
 import Layout from '@/components/Layout'
 import { getAllProjectIds, getProjectData } from '@/lib/projects'
 import Head from 'next/head'
-import Date from '@/components/Date'
+import DateDisplayer from '@/components/DateDisplayer'
 import utilStyles from '@/styles/utils.module.css'
+import { use, useEffect } from 'react'
+import mermaid from 'mermaid'
 
 export default function ProjectEntry({ projectData }) {
+  useEffect(() => {
+    mermaid.run({
+      querySelector: '.language-mermaid',
+    })
+  }, [projectData])
   return (
     <Layout title="projects" backName="projects" backHref="/projects">
       <Head>
@@ -13,7 +20,8 @@ export default function ProjectEntry({ projectData }) {
       <article>
         <h1 className={utilStyles.headingXl}>{projectData.title}</h1>
         <div className={utilStyles.lightText}>
-          <Date dateString={projectData.date} />
+          <DateDisplayer label="created" dateString={projectData.created} />
+          <DateDisplayer style={{float: 'right'}} label="updated" dateString={projectData.updated} />
         </div>
         <div dangerouslySetInnerHTML={{ __html: projectData.contentHtml }} />
       </article>
@@ -22,7 +30,7 @@ export default function ProjectEntry({ projectData }) {
 }
 
 export async function getStaticPaths() {
-  const projects = getAllProjectIds()
+  const projects = await getAllProjectIds()
   return {
     paths: projects.map((project) => (
       { params: project }

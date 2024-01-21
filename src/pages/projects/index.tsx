@@ -1,12 +1,11 @@
 import Head from 'next/head'
 import Layout, { siteTitle } from '@/components/Layout'
 import utilStyles from '@/styles/utils.module.css'
-import { getSortedProjectsData } from '@/lib/projects'
+import { getSortedProjectsMetadata } from '@/lib/projects'
 import Link from 'next/link'
-import Date from '@/components/Date'
+import DateDisplayer from '@/components/DateDisplayer'
 
 export default function Project({ allProjectsData }) {
-  const projectsToShow = allProjectsData.filter(({ id }) => !id.startsWith("_"))
   return (
     <Layout title="projects">
       <Head>
@@ -22,14 +21,14 @@ export default function Project({ allProjectsData }) {
         </p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <h2 className={utilStyles.headingLg}>Projects</h2>
         <ul className={utilStyles.list}>
-          {projectsToShow.length === 0 ? (
-            <li className={utilStyles.listItem} key="no-posts">
+          {allProjectsData.length === 0 ? (
+            <li className={utilStyles.listItem} key="no-projects">
               <p>😔 No projects yet...</p>
             </li>
           ) : (
-            projectsToShow.map(({ id, date, title, tags }) => (
+            allProjectsData.map(({ id, created, updated, title, tags }) => (
               <li className={utilStyles.listItem} key={id}>
                 <Link href={`/projects/${id}`}>{title}</Link>
                 <br />
@@ -38,7 +37,9 @@ export default function Project({ allProjectsData }) {
                     <span key={tag}>{tag}</span>
                   ))}
                   {tags?.length > 0 && " | "}
-                  <Date dateString={date} />
+                  <DateDisplayer label="created" dateString={created} />
+                  {updated && " | "}
+                  <DateDisplayer label="updated" dateString={updated} />
                 </small>
                 <br />
                 <small className={utilStyles.lightText}>
@@ -52,7 +53,7 @@ export default function Project({ allProjectsData }) {
 }
 
 export async function getStaticProps() {
-  const allProjectsData = getSortedProjectsData()
+  const allProjectsData = await getSortedProjectsMetadata()
   return {
     props: {
       allProjectsData

@@ -1,11 +1,77 @@
 ---
 title: 'DGate - API Gateway'
-date: '2023-04-02'
+created: '2024-01-20'
+updated: '2024-01-20'
 ---
 
-# DGate Introduction
-
 DGate (previously called RKX) is a dynamic module based API Gateway built in Go. It is designed to be a facile, fast, and flexible.
+
+## API Gateway
+
+An API Gateway is a server that acts as an entry point for clients. It is a reverse proxy that sits in front of one or more services.  The API Gateway can be used to handle authentication, retrying, circuit breaker logic, rate limiting, load balancing, and more. Please check out [this article](https://microservices.io/patterns/apigateway.html) for more information.
+
+An API Gateway is a common pattern in microservice architectures, where each service is responsible for a specific task. DGate, for example, can route requests to different services based on the request path, request method and domain name. This allows you to build an infrastructure that operates under different names, but additionally .
+
+## How does DGate differ?
+
+DGate is an API Gateway and I plan to add all the features that you would expect from an API Gateway. However, DGate is different from other API Gateways in that it is built with support for dynamic modules. This means that you can write modules that can be loaded at runtime, without needing to restart the server. This allows you to build custom modules that can be used to handle/modify requests/responses throughout the request life cycle. For example, you can write a module that can be used to handle authentication, logging, or even custom business logic.
+
+DGate also comes with a built-in admin API which has it's own embedded database. This allows you to manage your DGate instance using the admin API. The admin API can be used to create, update, delete, and view resources. The admin API can also be used to view logs, stats, and other information about your DGate instance.
+
+The admin API also supports replication using the Raft consensus algorithm. This means that you can run multiple DGate instances and they will automatically replicate resources across all nodes. This allows you to build a highly available and scalable API Gateway.
+
+### DGate Modules
+
+DGate modules are scripts that are ran at runtime in particular functions. Modules can be built in TypeScript or JavaScript. Modules can be used to modify the request or response or handle the request/response in a custom way.
+
+There are currently 5 types of modules:
+- fetchUpstream - this module is used to select an upstream service url
+- requestHandler - this module is used to handle the request, when a route has no service.
+- errorHandler - this module is used to handle errors (network, timeouts, etc.).
+- modifyRequest - this module is used to modify the request before it is sent to the upstream service (or before it is handled by the requestHandler).
+- modifyResponse - this module is used to modify the response before it is sent to the client.
+
+```mermaid
+sequenceDiagram
+    actor C as Client
+    participant G as DGate
+    participant S1 as Service1
+
+    C->>+G: server1 - /call1
+    Note right of G: fetchUpstream()
+    Note right of G: modifyRequest()
+    G->>+S1: /call1
+    S1-->>-G: resp1
+    Note right of G: *errorHandler()
+    Note right of G: modifyReponse()
+    G-->>-C: resp1
+
+    C->>+G: server1 - /call1
+    Note right of G: fetchUpstream()
+    Note right of G: modifyRequest()
+    Note right of G: requestHandler()
+    Note right of G: *errorHandler()
+    %% Note right of G: modifyReponse()
+    G-->>-C: resp1
+```
+
+In the case of a non-http error (network, timeout, etc.), the errorHandler will be called instead of the modifyResponse. However, if the retries are not exhausted, the errorHandler will not be called until the retries are exhausted.
+  
+```mermaid retries=3
+sequenceDiagram
+    actor C as Client
+    participant G as DGate
+    participant S2 as Service2
+
+    C->>+G: server2 - /call2
+    G--x+S2: /call2
+    G--x+S2: /call2
+    G--x+S2: /call2
+    G--x+S2: /call2
+    Note right of G: *errorHandler()
+```
+
+## Concepts
 
 Namespaces - one or more domains/certs.
 Routes - which are paths that are triggered when they hit the proxy
@@ -18,17 +84,10 @@ Modules - scripts that are ran at runtime in particular functions
 - There is built-in support for:
   - Certification Mappings
   - Basic/JWT/Key Authentication
-  - Canary, Versioning and rollbacks
-
-# Module Types
-
-There are 2 types of modules:
-- Proxy Modules - modules that are triggered by events like a request or response. Trigger Modules can be used to modify the request or response or handle the request/response in a custom way.
-- Admin Modules - modules that are triggered by admin API events; like a creating, modifying, or deleting resources. Admin Modules can also be used to handle custom operations from the admin API. These sort of modules will be useful for companies that want to enforce specific rules/patterns.
-
-# Clustering and Persistence
-
-Currently, DGate doesn't use clustering or automated persistance across multiple nodes yet. Currently, a change needs to be applied to all nodes individually. I plan to add clustering and persistance in the future. 
+  - Canary + A/B Testing (Conditional Module Loading)
+  - Transactional Rollouts
+  - Versioning and rollbacks
+  - Custom Stats
 
 # DGate Client - `dgate-cli`
 
@@ -38,13 +97,14 @@ Currently, DGate doesn't use clustering or automated persistance across multiple
 
 ## DGate vs Kong
 
-DGate aims to bring the simplicity of Kong, but the flexibility of building it yourself. 
+DGate aims to bring the simplicity of Kong, but the flexibility of building it yourself utilizing dynamic modules.
 
-Therefore DGate utilizes similar high-level concepts as Kong:
+DGate utilizes similar high-level concepts as Kong:
 - Routes
 - Services
 - Modules (Plugins)
-- Clients (Consumers)
+
+Kong Consumers do not exist in DGate, instead, DGate uses a different approach. DGate uses Collection/Documents to represent some arbitrary data. This allows you to create your own consumer system when used together with dynamic modules.
 
 ### Why not just use Kong?
 
