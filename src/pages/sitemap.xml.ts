@@ -1,6 +1,7 @@
 import { getSortedBlogsMetadata } from "@/lib/blogs";
 import { FileMetadata } from "@/lib/common";
 import { getSortedProjectsMetadata } from "@/lib/projects";
+import { GetServerSidePropsContext } from "next";
 
 const deployDate = new Date().toISOString().split('T')[0];
 
@@ -20,7 +21,7 @@ function generateSiteMap(posts: FileMetadata[], projects: FileMetadata[]) {
 
 function SiteMap() {}
   
-export async function getServerSideProps({ res }) {
+export async function getServerSideProps({ res }: GetServerSidePropsContext) {
     const blogData = await getSortedBlogsMetadata();
     const projectData = await getSortedProjectsMetadata();
     const sitemap = generateSiteMap(blogData, projectData);
