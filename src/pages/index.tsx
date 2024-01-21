@@ -5,10 +5,10 @@ import Link from 'next/link'
 import { AiFillLinkedin, AiFillGithub } from 'react-icons/ai'
 import { getIntroMarkdown } from '@/lib/intro'
 
+const YOE = (monthDiff(new Date(2018, 11), new Date()) / 12.0).toFixed(1);
 
 export default function Home({ introMd }) {
-  const numYears = (monthDiff(new Date(2018, 11), new Date()) / 12.0).toFixed(1);
-  const introMdHtml = introMd.contentHtml.replace("{{numYears}}", numYears)
+  const introMdHtml = introMd.contentHtml.replace("{{YOE}}", YOE)
   return (
     <Layout>
       <Head>

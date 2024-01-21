@@ -1,73 +1,17 @@
 import fs from 'fs'
 import path from 'path'
-import matter from 'gray-matter'
-import { remark } from 'remark'
-import html from 'remark-html'
+import { getAllIds, getAllSortedData, getData } from './common'
 
 const projectsDirectory = path.join(process.cwd(), 'md/projects')
 
-type ProjectData = {
-  id: string
-  date?: string
-  tags?: string[]
-}
-
-export function getSortedProjectsData() {
-  // Get file names under /projects
-  const fileNames = fs.readdirSync(projectsDirectory)
-  const allProjectsData: ProjectData[] = fileNames.map(fileName => {
-    // Remove ".md" from file name to get id
-    const id = fileName.replace(/\.md$/, '')
-
-    // Read markdown file as string
-    const fullPath = path.join(projectsDirectory, fileName)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-
-    // Use gray-matter to parse the project metadata section
-    const matterResult = matter(fileContents)
-
-    // Combine the data with the id
-    return {
-      id,
-      ...matterResult.data
-    }
-  })
-  // Sort projects by date
-  return allProjectsData.sort((a, b) => {
-    if (a.date && a.date < b.date) {
-      return 1
-    } else {
-      return -1
-    }
-  })
+export async function getSortedProjectsMetadata() {
+  return getAllSortedData(projectsDirectory)
 }
 
 export function getAllProjectIds() {
-  const fileNames = fs.readdirSync(projectsDirectory)
-  return fileNames.map(fileName => {
-    return {
-      id: fileName.replace(/\.md$/, '')
-    }
-  })
+  return getAllIds(projectsDirectory)
 }
 
-export async function getProjectData(id) {
-  const fullPath = path.join(projectsDirectory, `${id}.md`)
-  const fileContents = fs.readFileSync(fullPath, 'utf8')
-
-  // Use gray-matter to parse the project metadata section
-  const matterResult = matter(fileContents)
-
-  // Use remark to convert markdown into HTML string
-  const processedContent = await remark()
-    .use(html)
-    .process(matterResult.content)
-  const contentHtml = processedContent.toString()
-
-  // Combine the data with the id and contentHtml
-  return {
-    id,
-    contentHtml,
-    ...matterResult.data
-  }
+export async function getProjectData(id: string)  {
+  return getData(projectsDirectory, id)
 }

@@ -1,11 +1,11 @@
 ---
-title: 'DataQueen - Cloud Data Warehouse/Lake Solution'
-date: '2023-04-22'
+title: 'DataQueen - Cloud Data Warehouse/Lake (deprecated)'
+created: '2023-04-22'
 ---
 
-# DataQueen Introduction
+>>>> **Note: _This project is deprecated._**
 
-DataQueen is a cloud data warehouse built in Rust. It is designed to be a simple and easy to integrate. DataQueen uses object storage as its storage layer and datafusion as the query engine for the compute layer.
+DataQueen is a cloud data warehouse that lives on top of your object storage (like S3). DataQueen acts as the compute layer, allowing users to make complex queries across many files thanks to Apache Datafusion. It is designed to be a simple and easy to integrate. DataQueen uses S3 as its storage layer and apache datafusion as the query engine for the compute layer.
 
 # Motivation
 
@@ -26,6 +26,10 @@ Despite the compute layer needing to download the data, parse the data, and run 
 Depending on what fields need to be accessed, the query time can be signifigantly reduced because of the Apache Arrow columnar format.
 
 To run a query on a dataset, you first need to register the dataset as a tableww m. This can take up over a minute depending on the size of the dataset.
+
+# Challenges
+
+For most companies, the primary challenge will be setting up ETL pipelines to transfer data from your source database(s) to object storage, usually in the form of parquet or jsonl files. This can be an ongoing process, as you may need to add, update, or remote tables and perhaps even add new data sources. ETL pipelines can be batched or streamed, depending on your requirements.
 
 # Self-hosting
 

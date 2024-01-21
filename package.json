@@ -1,21 +1,25 @@
 {
-  "private": true,
+  "name": "bubbajoe.dev",
+  "engine": {
+    "node": ">=20.11"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "@react-icons/all-files": "^4.1.0",
-    "date-fns": "^2.29.3",
+    "@vercel/analytics": "^1.1.2",
+    "date-fns": "^3.3.0",
     "gray-matter": "^4.0.3",
-    "next": "13.2.4",
+    "mermaid": "^10.7.0",
+    "micromark": "^4.0.0",
+    "micromark-extension-gfm": "^3.0.0",
+    "next": "14.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
-    "remark": "^14.0.2",
-    "remark-html": "^15.0.1",
-    "sharp": "^0.32.0"
+    "sharp": "^0.33.2"
   },
   "devDependencies": {
     "@types/node": "18.15.9",

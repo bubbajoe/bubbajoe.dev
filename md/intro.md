@@ -5,7 +5,7 @@ title: bubbajoe.dev
 Hello, my name is Joe Williams and welcome to my website! please check the source code [here](https://github.com/BubbaJoe/bubbajoe.dev).
 
 ### About me
-I am a Software Engineer currently living in Japan. I have been working in the software industry and living in Japan for around ~{{numYears}} years.
+I am a Software Engineer currently living in Japan. I have been working in the software industry and living in Japan for around ~{{YOE}} years.
 
 I have worked on many personal and work projects including: Back-end APIs in Node/Rust/Go to Data Pipelines using AirByte/Cloudquery/Debezium to Front-end using React/NextJS.
 
