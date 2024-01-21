@@ -6,6 +6,7 @@ import matter from 'gray-matter'
 
 export type FileMetadata = {
     id: string
+    title?: string
     created?: string
     updated?: string
     tags?: string[]
@@ -32,18 +33,18 @@ export async function getAllSortedData(directory: string): Promise<FileMetadata[
     }));
     // Sort projects by date
     return allData.sort((a, b) => {
-      if (a.updated && !b.updated) {
-        return 1
-      } else if (!a.updated && b.updated) {
-        return -1
-      } else if (!a.updated && !b.updated) {
-        return 0
+      const aData = Date.parse(a.updated || a.created)
+      const bData = Date.parse(b.updated || b.created)
+      
+      if (aData && bData) {
+        if (aData === bData) {
+          return a?.title < b?.title ? 1 : -1
+        }
+        return aData < bData ? 1 : -1
+      } else if (!aData && !bData) {
+        return a?.title < b?.title ? 1 : -1
       }
-      if (a.updated < b.updated) {
-        return 1
-      } else {
-        return -1
-      }
+      return aData ? 1 : -1
     })
 }
 

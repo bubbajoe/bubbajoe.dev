@@ -1,9 +1,9 @@
 ---
-title: 'DataQueen - Cloud Data Warehouse/Lake Solution'
+title: 'DataQueen - Cloud Data Warehouse/Lake (deprecated)'
 created: '2023-04-22'
 ---
 
-# DataQueen Introduction
+>>>> **Note: _This project is deprecated._**
 
 DataQueen is a cloud data warehouse that lives on top of your object storage (like S3). DataQueen acts as the compute layer, allowing users to make complex queries across many files thanks to Apache Datafusion. It is designed to be a simple and easy to integrate. DataQueen uses S3 as its storage layer and apache datafusion as the query engine for the compute layer.
 

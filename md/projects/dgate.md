@@ -1,12 +1,12 @@
 ---
-title: 'DGate - API Gateway'
-created: '2024-01-20'
-updated: '2024-01-20'
+title: 'DGate - Dynamic API Gateway'
+created: '2023-04-02'
+updated: '2024-01-21'
 ---
 
 DGate (previously called RKX) is a dynamic module based API Gateway built in Go. It is designed to be a facile, fast, and flexible.
 
-## API Gateway
+## API Gateways
 
 An API Gateway is a server that acts as an entry point for clients. It is a reverse proxy that sits in front of one or more services.  The API Gateway can be used to handle authentication, retrying, circuit breaker logic, rate limiting, load balancing, and more. Please check out [this article](https://microservices.io/patterns/apigateway.html) for more information.
 
@@ -89,13 +89,28 @@ Modules - scripts that are ran at runtime in particular functions
   - Versioning and rollbacks
   - Custom Stats
 
-# DGate Client - `dgate-cli`
+## DGate Client - `dgate-cli`
 
 `dgate-cli` is a command line tool for managing DGate resources. I plan to also add the management of DGate instances, viewing DGate logs/stats, and other DGate features.
 
-# Conclusion
+## Goals
 
-## DGate vs Kong
+- I would like DGate to be easy to use and maintain.
+  - deployable in any environment or cloud provider.
+  - easy to configure.
+  - easy to test.
+- I would like DGate to be fast and efficient.
+  - handle a large amount of requests.
+  - handle a large amount of namespaces/routes.
+  - dynamic modules to have minimal overhead.
+- I would like DGate to be flexible and extensible.
+  - handle any type of request/response. (WebSockets, gRPC, etc.)
+  - custom modules to be able to create almost any plugin that Kong supports.
+
+
+## Conclusion
+
+### DGate vs Kong
 
 DGate aims to bring the simplicity of Kong, but the flexibility of building it yourself utilizing dynamic modules.
 
@@ -116,4 +131,6 @@ DGate aims to solve these problems by using JavaScript/TypeScript, with dynamic 
 
 ## Release Plan
 
-I plan to release the beta version of DGate at the end of this year (2023). I am currently dogfooding DGate in several of my projects. In the process of prioritizing, refactoring and testing; just trying to think of many ways how DGate can/will be used and trying to design the application in a way that is scalable, yes flexible, and easy to use.
+I plan to release the beta version of DGate in February (2024). I am currently dogfooding DGate in several of my projects. 
+
+DGate has gone through several iterations and large refactors. I am currently working on a large refactor to make DGate more flexible and easier to use, but most importantly, easier to test.
