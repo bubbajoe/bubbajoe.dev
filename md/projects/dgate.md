@@ -1,14 +1,14 @@
 ---
 title: 'DGate - Dynamic API Gateway'
 created: '2023-04-02'
-updated: '2024-02-21'
+updated: '2024-04-16'
 ---
 
 Introducing DGate - your go-to solution for a modern API Gateway! Born from late night coding sessions in Go, DGate stands apart as a module-based solution. Crafted for speed, efficiency, and seamless usability, it redefines the game. What sets DGate alight is its dynamic module support - empowering you to script modules on the fly, no more server restarts or reloads.
 
 ## API Gateways
 
-An API Gateway is a server that acts as an entry point for clients. It is a high-level reverse proxy that sits in front of one or more services. API Gateways usually handle stuff like authentication, retrying, circuit breaker logic, rate limiting, load balancing, and more. Please check out <a href="https://microservices.io/patterns/apigateway.html" target="_blank">this article</a> for more information.
+An API Gateway is a server that acts as an entry point for clients. It is a high-level reverse proxy that sits in front of one or more services. API Gateways usually handle stuff like authentication, retrying, circuit breaker logic, rate limiting, load balancing, and more. Please check out [this article](https://microservices.io/patterns/apigateway.html) for more information.
 
 API Gateways are common in microservice architectures. DGate, for example, can route requests to different services based on the request path, request method, or domain name. This allows you to build services that have intuitive names (i.e. `{service1}.example.com` or `example.com/{service1}`).
 
@@ -115,7 +115,7 @@ Furthermore, DGate offers support for replication using the Raft consensus algor
 
 ### Release Plan
 
-DGate Beta has been released and is available on GitHub! You can find the source code and documentation <a href="https://github.com/dgate-io/dgate" target="_blank">here</a>. I plan to release a stable version of DGate hopefully later this year. I will be adding more features, fixing bugs, and improving the documentation. I will also be adding more examples and tutorials to help you get started with DGate.
+DGate Beta has been released and is available on GitHub! You can find the source code and documentation [here](https://github.com/dgate-io/dgate). I plan to release a stable version of DGate hopefully later this year. I will be adding more features, fixing bugs, and improving the documentation. I will also be adding more examples and tutorials to help you get started with DGate.
 
 
 Thank you for reading this project article! I hope you found it informative and helpful. If you have any questions or feedback, please feel free to reach out to me. I would love to hear from you!
