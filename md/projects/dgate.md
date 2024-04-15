@@ -1,35 +1,35 @@
 ---
 title: 'DGate - Dynamic API Gateway'
 created: '2023-04-02'
-updated: '2024-01-21'
+updated: '2024-02-21'
 ---
 
-DGate (previously called RKX) is a dynamic module based API Gateway built in Go. It is designed to be a facile, fast, and flexible.
+Introducing DGate - your go-to solution for a modern API Gateway! Born from late night coding sessions in Go, DGate stands apart as a module-based solution. Crafted for speed, efficiency, and seamless usability, it redefines the game. What sets DGate alight is its dynamic module support - empowering you to script modules on the fly, no more server restarts or reloads.
 
 ## API Gateways
 
-An API Gateway is a server that acts as an entry point for clients. It is a reverse proxy that sits in front of one or more services.  The API Gateway can be used to handle authentication, retrying, circuit breaker logic, rate limiting, load balancing, and more. Please check out [this article](https://microservices.io/patterns/apigateway.html) for more information.
+An API Gateway is a server that acts as an entry point for clients. It is a high-level reverse proxy that sits in front of one or more services. API Gateways usually handle stuff like authentication, retrying, circuit breaker logic, rate limiting, load balancing, and more. Please check out <a href="https://microservices.io/patterns/apigateway.html" target="_blank">this article</a> for more information.
 
-An API Gateway is a common pattern in microservice architectures, where each service is responsible for a specific task. DGate, for example, can route requests to different services based on the request path, request method and domain name. This allows you to build an infrastructure that operates under different names, but additionally .
+API Gateways are common in microservice architectures. DGate, for example, can route requests to different services based on the request path, request method, or domain name. This allows you to build services that have intuitive names (i.e. `{service1}.example.com` or `example.com/{service1}`).
 
-## How does DGate differ?
+## How does DGate differ from other API Gateways?
 
-DGate is an API Gateway and I plan to add all the features that you would expect from an API Gateway. However, DGate is different from other API Gateways in that it is built with support for dynamic modules. This means that you can write modules that can be loaded at runtime, without needing to restart the server. This allows you to build custom modules that can be used to handle/modify requests/responses throughout the request life cycle. For example, you can write a module that can be used to handle authentication, logging, or even custom business logic.
+DGate serves as a versatile API Gateway, equipped with a comprehensive range of functionalities typical for any system. However, what sets DGate apart is its unique support for dynamic modules for such architectures that need must customization at L7. Unlike traditional API Gateways, DGate empowers users to develop and integrate modules that can be dynamically loaded at runtime, eliminating the need for server restarts. This groundbreaking feature enables the creation of custom modules tailored to manipulate and manage requests and responses throughout the request life cycle. Whether it's authentication, logging, or implementing bespoke business logic, DGate's dynamic module support opens endless possibilities for customization.
 
-DGate also comes with a built-in admin API which has it's own embedded database. This allows you to manage your DGate instance using the admin API. The admin API can be used to create, update, delete, and view resources. The admin API can also be used to view logs, stats, and other information about your DGate instance.
+Moreover, DGate includes a built-in Admin API, complete with its embedded database. This integrated solution enables seamless management of DGate instances via the Admin API interface. With the Admin API, users gain the ability to effortlessly create, update, delete, and view resources within their DGate environment. Furthermore, the Admin API offers insights into logs, statistics, and other vital information vital for monitoring and optimizing DGate performance.
 
-The admin API also supports replication using the Raft consensus algorithm. This means that you can run multiple DGate instances and they will automatically replicate resources across all nodes. This allows you to build a highly available and scalable API Gateway.
+The Admin API has replication capabilities leveraging the Raft consensus algorithm. This functionality empowers users to deploy multiple DGate instances, ensuring automatic resource replication across all nodes. By harnessing the power of Raft consensus, DGate facilitates the creation of highly available and scalable API Gateway architectures, setting a new standard for reliability and performance in the realm of API management.
 
 ### DGate Modules
 
-DGate modules are scripts that are ran at runtime in particular functions. Modules can be built in TypeScript or JavaScript. Modules can be used to modify the request or response or handle the request/response in a custom way.
+DGate modules are scripts that are run at runtime. Modules can be built in TypeScript or JavaScript. Modules can be used to modify the request or response or handle the request/response in certain functions depending on what variables are exposed.
 
-There are currently 5 types of modules:
-- fetchUpstream - this module is used to select an upstream service url
-- requestHandler - this module is used to handle the request, when a route has no service.
-- errorHandler - this module is used to handle errors (network, timeouts, etc.).
-- modifyRequest - this module is used to modify the request before it is sent to the upstream service (or before it is handled by the requestHandler).
-- modifyResponse - this module is used to modify the response before it is sent to the client.
+There are currently 5 module functions:
+- `fetchUpstream` - this module is used to select an upstream service URL
+- `requestHandler` - this module is used to handle the request, instead of using a service.
+- `errorHandler` - this module is used to handle errors (network, timeouts, etc.).
+- `responseModifier` - this module is used to modify the request before it is sent to the upstream service (or before it is handled by the requestHandler).
+- `requestModifier` - this module is used to modify the response before it is sent to the client.
 
 ```mermaid
 sequenceDiagram
@@ -55,9 +55,9 @@ sequenceDiagram
     G-->>-C: resp1
 ```
 
-In the case of a non-http error (network, timeout, etc.), the errorHandler will be called instead of the modifyResponse. However, if the retries are not exhausted, the errorHandler will not be called until the retries are exhausted.
+In the case of a non-HTTP error (network, timeout, etc.), the `errorHandler` will be called instead of the modifyResponse. However, if the retries are not exhausted, the `errorHandler` will not be called until the retries are exhausted.
   
-```mermaid retries=3
+```mermaid
 sequenceDiagram
     actor C as Client
     participant G as DGate
@@ -71,66 +71,51 @@ sequenceDiagram
     Note right of G: *errorHandler()
 ```
 
-## Concepts
+## Resource Types
 
-Namespaces - one or more domains/certs.
-Routes - which are paths that are triggered when they hit the proxy
-Services - one or more URLs (or a module for handling requests)
-Consumer - these represent some way of recognizing the client.
-Modules - scripts that are ran at runtime in particular functions
+Namespaces - provide a way to group resources together
 
-- Modules can be built in TypeScript or JavaScript
-  - dynamic modules, meaning they can be loaded/replaced without needed to restart the server
-- There is built-in support for:
-  - Certification Mappings
-  - Basic/JWT/Key Authentication
-  - Canary + A/B Testing (Conditional Module Loading)
-  - Transactional Rollouts
-  - Versioning and rollbacks
-  - Custom Stats
+Routes - provide a way to match a request to a service or module handler
+
+Services - provide a way to represent an upstream service
+
+Modules - provide a way to customize the request/response data being sent upstream and downstream.
+
+Domains - provide a way to match a request to a namespace
+
+Collections - provide a way to store arbitrary data based on a JSON schema
+
+Documents - provide a way to store arbitrary data in a collection based on a schema
 
 ## DGate Client - `dgate-cli`
 
-`dgate-cli` is a command line tool for managing DGate resources. I plan to also add the management of DGate instances, viewing DGate logs/stats, and other DGate features.
-
-## Goals
-
-- I would like DGate to be easy to use and maintain.
-  - deployable in any environment or cloud provider.
-  - easy to configure.
-  - easy to test.
-- I would like DGate to be fast and efficient.
-  - handle a large amount of requests.
-  - handle a large amount of namespaces/routes.
-  - dynamic modules to have minimal overhead.
-- I would like DGate to be flexible and extensible.
-  - handle any type of request/response. (WebSockets, gRPC, etc.)
-  - custom modules to be able to create almost any plugin that Kong supports.
-
+`dgate-cli` is a command line tool for managing DGate resources. It can be used to create, update, delete, and view resources. It can also be used to view logs, stats, and other information about your DGate instance.
 
 ## Conclusion
 
 ### DGate vs Kong
 
-DGate aims to bring the simplicity of Kong, but the flexibility of building it yourself utilizing dynamic modules.
-
-DGate utilizes similar high-level concepts as Kong:
-- Routes
-- Services
-- Modules (Plugins)
-
-Kong Consumers do not exist in DGate, instead, DGate uses a different approach. DGate uses Collection/Documents to represent some arbitrary data. This allows you to create your own consumer system when used together with dynamic modules.
+DGate aims to bring the simplicity of Kong, but the flexibility of building it yourself utilizing dynamic modules. DGate utilizes similar high-level concepts as Kong but with a different approach for extensibility and ease of use.
 
 ### Why not just use Kong?
 
-While Kong is, hands down, one of the best API Gateways out there, it is not without its flaws. Kong is built in Lua (plugins too), which is a great language, but it is not as popular as JavaScript or TypeScript. This means that it is harder to find developers who are familiar with Lua, and more importantly, who are willing to write modules in Lua. Plugins cannot be dynamically loaded, meaning it will require a restart, which can be a hassle depending on your setup and uptime requirements, not to mention rollbacks. Additionally, deploying Kong can be complex, as you may need a database depending on what features you want to use.
+#### Plugins/Modules
 
-TLDR: lua sucks (unpopular), complex deployment, restart to update plugins, enterprise paywall features and overall, not so flexible.
+While Kong stands out as one of the top-tier API Gateways available, it's not exempt from shortcomings. One limitation lies in its inability to dynamically load plugins, necessitating manual reloads or even server restarts for integrating new plugins. This process can be cumbersome, particularly for setups requiring high uptime or when swift rollbacks become necessary. To be frank, this isn't really an issue unless you are heavily creating Kong modules.
 
-DGate aims to solve these problems by using JavaScript/TypeScript, with dynamic deployments and by having an internal state management and replication system. This will ensure that DGate is easy to deploy and maintain.
+In response to these challenges, DGate presents an innovative solution utilizing JavaScript/TypeScript and dynamically loaded modules, simplifying the application of plugins to specific routes via a single Admin API call. Embracing resource lifecycle management, DGate facilitates versioning and rollback capabilities for seamless resource modifications. Additionally, its internal state manager and distributed replication system further enhance deployment and maintenance ease from the user's perspective, ensuring DGate stands out as a user-friendly, robust API Gateway solution.
 
-## Release Plan
+#### Setup
 
-I plan to release the beta version of DGate in February (2024). I am currently dogfooding DGate in several of my projects. 
+Setting up and maintaining Kong can be cumbersome due to its dependency on a database to store configuration state.
 
-DGate has gone through several iterations and large refactors. I am currently working on a large refactor to make DGate more flexible and easier to use, but most importantly, easier to test.
+In contrast, DGate streamlines this process by storing data within its integrated database, enabling seamless resource management via the Admin API. Through the Admin API, users can effortlessly create, update, delete, and monitor resources, including logs, statistics, and other pertinent information related to their DGate instance.
+
+Furthermore, DGate offers support for replication using the Raft consensus algorithm. This feature empowers users to deploy multiple DGate instances, ensuring automatic resource replication across all nodes. This not only facilitates the creation of a highly available and scalable API Gateway but also guarantees a consistently reliable Admin API experience.
+
+### Release Plan
+
+DGate Beta has been released and is available on GitHub! You can find the source code and documentation <a href="https://github.com/dgate-io/dgate" target="_blank">here</a>. I plan to release a stable version of DGate hopefully later this year. I will be adding more features, fixing bugs, and improving the documentation. I will also be adding more examples and tutorials to help you get started with DGate.
+
+
+Thank you for reading this project article! I hope you found it informative and helpful. If you have any questions or feedback, please feel free to reach out to me. I would love to hear from you!
