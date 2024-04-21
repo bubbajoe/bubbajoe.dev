@@ -28,7 +28,7 @@ export default function Project({ allProjectsData }) {
             </li>
           ) : (
             allProjectsData.map((matter: any) =>
-              displayTitle(matter, '/projects'))
+              displayTitle('/projects', matter))
           )}
         </ul>
       </section>

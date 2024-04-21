@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { AiFillLinkedin, AiFillGithub } from 'react-icons/ai'
 import { getIntroMarkdown } from '@/lib/intro'
 import DateDisplayer from '@/components/DateDisplayer'
+import { FileMetadata } from '@/lib/common'
 
 const YOE = (monthDiff(new Date(2018, 11), new Date()) / 12.0).toFixed(1);
 
@@ -48,7 +49,7 @@ export async function getStaticProps() {
   }
 }
 
-export function displayTitle({ id, created, updated, title, tags, deprecated }, linkPrefix: string) {
+export function displayTitle(linkPrefix: string, { id, created, updated, title, tags, deprecated }: FileMetadata) {
   if (!linkPrefix.endsWith('/')) {
     linkPrefix += '/';
   }

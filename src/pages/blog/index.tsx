@@ -28,7 +28,7 @@ export default function Blog({ allBlogsData }) {
             </li>
           ) : (
             allBlogsData.map((matter: any) =>
-              displayTitle(matter, '/blog'))
+              displayTitle('/blog', matter))
           )}
         </ul>
       </section>

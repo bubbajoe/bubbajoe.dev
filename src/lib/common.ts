@@ -10,6 +10,7 @@ export type FileMetadata = {
     created?: string
     updated?: string
     tags?: string[]
+    deprecated?: boolean
 }
 
 export async function getAllSortedData(directory: string): Promise<FileMetadata[]> {
@@ -32,7 +33,7 @@ export async function getAllSortedData(directory: string): Promise<FileMetadata[
       }
     }));
     // Sort projects by date
-    return allData.sort((a, b) => {
+    const sortedData = allData.sort((a, b) => {
       const aData = Date.parse(a.updated || a.created)
       const bData = Date.parse(b.updated || b.created)
       
@@ -45,7 +46,16 @@ export async function getAllSortedData(directory: string): Promise<FileMetadata[
         return a?.title < b?.title ? 1 : -1
       }
       return aData ? 1 : -1
-    })
+    });
+    // move deprecated projects to the end, but keep them sorted by date
+    return sortedData.sort((a, b) => {
+      if (a.deprecated && !b.deprecated) {
+        return 1
+      } else if (!a.deprecated && b.deprecated) {
+        return -1
+      }
+      return 0
+    });
 }
 
 export async function getAllIds(directory: string) {
