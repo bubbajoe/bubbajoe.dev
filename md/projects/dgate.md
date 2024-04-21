@@ -1,7 +1,14 @@
 ---
 title: 'DGate - Dynamic API Gateway'
+subtitle: open-source
 created: '2023-04-02'
 updated: '2024-04-16'
+tags:
+  - oss
+  - api-gateway
+  - golang
+  - javascript
+  - typescript
 ---
 
 Introducing DGate - your go-to solution for a modern API Gateway! Born from late night coding sessions in Go, DGate stands apart as a module-based solution. Crafted for speed, efficiency, and seamless usability, it redefines the game. What sets DGate alight is its dynamic module support - empowering you to script modules on the fly, no more server restarts or reloads.

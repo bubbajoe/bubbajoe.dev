@@ -4,6 +4,7 @@ import utilStyles from '@/styles/utils.module.css'
 import Link from 'next/link'
 import { AiFillLinkedin, AiFillGithub } from 'react-icons/ai'
 import { getIntroMarkdown } from '@/lib/intro'
+import DateDisplayer from '@/components/DateDisplayer'
 
 const YOE = (monthDiff(new Date(2018, 11), new Date()) / 12.0).toFixed(1);
 
@@ -45,6 +46,30 @@ export async function getStaticProps() {
       introMd
     }
   }
+}
+
+export function displayTitle({ id, created, updated, title, tags, deprecated }, linkPrefix: string) {
+  if (!linkPrefix.endsWith('/')) {
+    linkPrefix += '/';
+  }
+  return <li className={utilStyles.listItem} key={id}>
+    <Link href={`${linkPrefix}${id}`} className={deprecated?'deprecated':''}>
+      {deprecated ? <>{title}</> : title}
+    </Link>
+    <br />
+    <small className={utilStyles.lightText}>
+      {tags?.map((tag: string) => (
+        <span className={utilStyles.tagEntry} key={tag}>{tag}</span>
+      ))}
+      {tags?.length > 0 && <br />}
+      <DateDisplayer label="created" dateString={created} />
+      {updated && " | "}
+      <DateDisplayer label="updated" dateString={updated} />
+    </small>
+    <br />
+    <small className={utilStyles.lightText}>
+    </small>
+  </li>;
 }
 
 function monthDiff(dateFrom: Date, dateTo: Date): number {

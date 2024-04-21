@@ -2,8 +2,7 @@ import Head from 'next/head'
 import Layout, { siteTitle } from '@/components/Layout'
 import utilStyles from '@/styles/utils.module.css'
 import { getSortedProjectsMetadata } from '@/lib/projects'
-import Link from 'next/link'
-import DateDisplayer from '@/components/DateDisplayer'
+import { displayTitle } from '..'
 
 export default function Project({ allProjectsData }) {
   return (
@@ -28,24 +27,9 @@ export default function Project({ allProjectsData }) {
               <p>😔 No projects yet...</p>
             </li>
           ) : (
-            allProjectsData.map(({ id, created, updated, title, tags }) => (
-              <li className={utilStyles.listItem} key={id}>
-                <Link href={`/projects/${id}`}>{title}</Link>
-                <br />
-                <small className={utilStyles.lightText}>
-                  {tags?.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                  {tags?.length > 0 && " | "}
-                  <DateDisplayer label="created" dateString={created} />
-                  {updated && " | "}
-                  <DateDisplayer label="updated" dateString={updated} />
-                </small>
-                <br />
-                <small className={utilStyles.lightText}>
-                </small>
-              </li>
-          )))}
+            allProjectsData.map((matter: any) =>
+              displayTitle(matter, '/projects'))
+          )}
         </ul>
       </section>
     </Layout>
