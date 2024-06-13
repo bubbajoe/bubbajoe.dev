@@ -18,11 +18,16 @@ body {
 a {
   color: red;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 500;
+}
+
+a.deprecated {
+  color: rgba(255, 0, 0, 0.477);
 }
 
 a:hover {
-  text-decoration: underline;
+  color: red;
+  font-weight:900;
 }
 
 img {

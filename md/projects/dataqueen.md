@@ -1,6 +1,8 @@
 ---
-title: 'DataQueen - Cloud Data Warehouse/Lake (deprecated)'
+title: 'DataQueen - Cloud Data Warehouse/Lake'
 created: '2023-04-22'
+deprecated: true
+tags: ['data-lake', 'cloud', 's3', 'apache-datafusion']
 ---
 
 >>>> **Note: _This project is deprecated._**

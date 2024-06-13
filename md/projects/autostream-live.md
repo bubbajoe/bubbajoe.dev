@@ -2,7 +2,11 @@
 title: 'Autostream Live - Cloud Media Streaming'
 created: '2023-04-02'
 updated: '2024-01-21'
+deprecated: true
+tags: ['streaming', 'video', 'audio', 'live', 'rtmp']
 ---
+
+>>>> **Note: _This project is deprecated and no longer maintained._**
 
 [Autostream.Live](https://www.autostream.live/) is a web-tool for managing your media content using the cloud. Autostream.Live allows you to create live streams on the cloud in many different ways. By creating live streams on the cloud you won't have to worry about unreliable hardware or internet. 
 

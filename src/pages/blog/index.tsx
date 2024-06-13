@@ -2,8 +2,7 @@ import Head from 'next/head'
 import Layout, { siteTitle } from '../../components/Layout'
 import utilStyles from '../../styles/utils.module.css'
 import { getSortedBlogsMetadata } from '../../lib/blogs'
-import Link from 'next/link'
-import DateDisplayer from '../../components/DateDisplayer'
+import { displayTitle } from '..'
 
 export default function Blog({ allBlogsData }) {
   return (
@@ -28,24 +27,9 @@ export default function Blog({ allBlogsData }) {
               <p>😔 No blogs yet...</p>
             </li>
           ) : (
-            allBlogsData.map(({ id, created, updated, title, tags }) => (
-              <li className={utilStyles.listItem} key={id}>
-                <Link href={`/blog/${id}`}>{title}</Link>
-                <br />
-                <small className={utilStyles.lightText}>
-                  {tags?.map((tag: string) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                  {tags?.length > 0 && " | "}
-                  <DateDisplayer label="created" dateString={created} />
-                  {updated && " | "}
-                  <DateDisplayer label="updated" dateString={updated} />
-                </small>
-                <br />
-                <small className={utilStyles.lightText}>
-                </small>
-              </li>
-          )))}
+            allBlogsData.map((matter: any) =>
+              displayTitle('/blog', matter))
+          )}
         </ul>
       </section>
     </Layout>
