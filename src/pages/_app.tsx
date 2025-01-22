@@ -12,6 +12,39 @@ mermaid.initialize({
   fontSize: 14,
 })
 
+if (typeof window !== 'undefined') {
+  const logger = () => {
+    const eid = crypto.randomUUID();
+    const uid = localStorage.getItem('uid') || crypto.randomUUID();
+    const sid = sessionStorage.getItem('sid') || crypto.randomUUID();
+    localStorage.setItem('uid', uid);
+    localStorage.setItem('sid', sid);
+    window.navigator.sendBeacon(`https://events.dgate.cloud/log?etype=webeventv1&eid=${eid}`, JSON.stringify({
+      event: 'pageview',
+      event_id: eid,
+      user_id: uid,
+      session_id: sid,
+      url: window.location.href,
+      path: window.location.pathname,
+      language: navigator.language,
+      referrer: document.referrer,
+      user_agent: navigator.userAgent,
+      screen_width: window.screen.width,
+      screen_height: window.screen.height,
+      viewport_width: window.innerWidth,
+      viewport_height: window.innerHeight,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timestamp: new Date().toISOString(),
+    }));
+  };
+
+  if (window['navigation']) {
+    window['navigation']?.addEventListener('navigate', logger)
+  } else {
+    window.addEventListener('load', logger);
+  }
+}
+
 export default function App({ Component, pageProps }) {
   return <>
     <div className='container'>

@@ -76,6 +76,7 @@ sequenceDiagram
     G--x+S2: /call2
     G--x+S2: /call2
     Note right of G: *errorHandler()
+    G--x+C: error
 ```
 
 ## Resource Types
