@@ -22,14 +22,10 @@ export default function Home({ introMd }) {
           <Link href="/blog">Blog</Link>
           <Link href="/projects">Projects</Link>
           <a target="_blank" href="https://github.com/BubbaJoe">
-            Github&nbsp;<AiFillGithub style={{
-              verticalAlign: "text-top",
-            }} />
+            Github
           </a>
           <a target="_blank" href="https://www.linkedin.com/in/bubbajoe">
-            Linkedin&nbsp;<AiFillLinkedin style={{
-              verticalAlign: "text-top",
-            }} />
+            Linkedin
           </a>
         </div>
         <div dangerouslySetInnerHTML={{ __html: introMdHtml }} />
