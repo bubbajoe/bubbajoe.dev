@@ -8,7 +8,7 @@ Hello, my name is Joe Williams and welcome to my website! You can find the sourc
 
 I am a Software Engineer currently living in Japan. I have been working in the software industry and living in Japan for around ~{{YOE}} years.
 
-I am currently working on [DGate](/projects/dgate) as a side project. Additionally, I am also learning Zig.
+Just quit my job to work on [M2W.ai](/projects/m2w-ai) full-time!
 
 Please check out my [projects](/projects) page for more information.
 
@@ -16,14 +16,16 @@ Please check out my [projects](/projects) page for more information.
 
 Recent things interested/working on:
 
-- Data Engineering (Data Pipelines, Data Streaming, @[DataQueen](/projects/dataqueen))
 - API Gateways/LB (@[*DGate](/projects/dgate) (similar to Kong), etc.)
+- Distributed Container Runtime (@[*JobD](/projects/jobd) (similar to Cloud Run Jobs), etc.)
+- Agentic Robotics Platform  (ARP)
+- Data Engineering (Data Pipelines, Data Streaming, @[DataQueen](/projects/dataqueen))
 - Dev-ops (Github Actions, GitLab CI/CD, Kubernetes, and Terraform...)
 - Ditributed Systems & Consensus (Raft, Paxos, etc.)
 - Video Engineering (Video Streaming, @[autostream.live](/projects/autostream-live))
 
 ### Hobbies
 
-- Unfortunately, coding... 😅
-- Entertainment: Netflix, 
-- Hanging out with family and friends, barbecuing, and drinking beer.
+- Unfortunately, coding... Getting back into Robotics as well
+- Entertainment: Love movies, anime and manga. Listening to loads of podcasts recently as well.
+- Hanging out with family and friends, barbecuing, and going to the gym!
