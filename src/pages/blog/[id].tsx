@@ -15,7 +15,7 @@ export default function BlogEntry({ blogData }) {
   return (
     <Layout title="blog" backName="blog" backHref="/blog">
       <Head>
-        <title>{blogData.title} | bubbajoe.dev</title>
+        <title>{`${blogData.title} | bubbajoe.dev`}</title>
       </Head>
       <article>
         <h1 className={utilStyles.headingXl}>{blogData.title}</h1>

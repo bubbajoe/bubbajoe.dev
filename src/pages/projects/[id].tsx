@@ -15,7 +15,7 @@ export default function ProjectEntry({ projectData }) {
   return (
     <Layout title="projects" backName="projects" backHref="/projects">
       <Head>
-        <title>{projectData.title} | bubbajoe.dev</title>
+        <title>{`${projectData.title} | bubbajoe.dev`}</title>
       </Head>
       <article>
         <h1 className={utilStyles.headingXl}>{projectData.title}</h1>
