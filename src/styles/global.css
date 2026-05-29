@@ -100,3 +100,121 @@ h5 {
 p {
   font-weight: lighter;
 }
+
+/* ---------- Code blocks ---------- */
+
+/* Inline code: subtle pill against the page background */
+code {
+  font-family: "Nerd Font", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.92em;
+  background: #1e1e1e;
+  color: #e6e6e6;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid #2a2a2a;
+}
+
+/* Block code: dark card with left accent and horizontal scroll.
+   Shiki emits <pre class="shiki ..."> with its own background; we override
+   to keep one consistent card style site-wide while still using shiki's
+   token colors. */
+pre,
+pre.shiki {
+  background: #1b1b1b !important;
+  border: 1px solid #2a2a2a;
+  border-left: 3px solid #e53935;
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  line-height: 1.55;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+  -webkit-overflow-scrolling: touch;
+  tab-size: 2;
+  font-family: "Nerd Font", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.92em;
+}
+
+/* Reset inline-code styles when nested in a pre block; let shiki's
+   per-token inline color styles win for highlighted blocks. */
+pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  font-size: 1em;
+  color: #e6e6e6;
+  display: block;
+  white-space: pre;
+  font-family: inherit;
+}
+
+/* Shiki line wrapper */
+pre.shiki code .line {
+  display: block;
+  min-height: 1.55em;
+}
+
+/* Mermaid diagrams shouldn't get the code-block card treatment */
+pre:has(> code.language-mermaid),
+code.language-mermaid {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+/* Custom scrollbar inside code blocks (WebKit only, graceful elsewhere) */
+pre::-webkit-scrollbar {
+  height: 8px;
+}
+pre::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 4px;
+}
+pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- GFM tables ---------- */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.25rem 0;
+  font-size: 0.95em;
+}
+
+th,
+td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #3a3a3a;
+  text-align: left;
+}
+
+th {
+  background: #2a2a2a;
+  font-weight: 700;
+  color: #e6e6e6;
+}
+
+tr:nth-child(even) td {
+  background: #2c2c2c;
+}
+
+/* ---------- Blockquotes ---------- */
+
+blockquote {
+  margin: 1.25rem 0;
+  padding: 0.6rem 1rem;
+  border-left: 3px solid #e53935;
+  background: #2a2a2a;
+  color: #cfcfcf;
+  border-radius: 0 6px 6px 0;
+}
+
+blockquote p {
+  margin: 0.25rem 0;
+}

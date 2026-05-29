@@ -3,6 +3,7 @@ import path from 'path'
 import {micromark} from 'micromark'
 import {gfm, gfmHtml} from 'micromark-extension-gfm'
 import matter from 'gray-matter'
+import {createHighlighter, type Highlighter} from 'shiki'
 
 export type FileMetadata = {
     id: string
@@ -89,9 +90,53 @@ export async function getData(directory: string, id: string)  {
   }
 }
 
+const SHIKI_LANGS = [
+  'bash', 'shell', 'sh', 'zsh',
+  'javascript', 'js', 'typescript', 'ts',
+  'tsx', 'jsx',
+  'json', 'yaml', 'yml', 'toml',
+  'rust', 'go', 'python', 'py',
+  'html', 'css', 'sql', 'dockerfile',
+  'diff', 'markdown', 'md',
+] as const
+
+let highlighterPromise: Promise<Highlighter> | null = null
+
+function getHighlighter(): Promise<Highlighter> {
+  if (!highlighterPromise) {
+    highlighterPromise = createHighlighter({
+      themes: ['github-dark-dimmed'],
+      langs: [...SHIKI_LANGS],
+    })
+  }
+  return highlighterPromise
+}
+
 export async function processMarkdown(markdown: string) {
-  return micromark(markdown, {
-    extensions: [gfm()],
-    htmlExtensions: [gfmHtml()]
+  const highlighter = await getHighlighter()
+
+  const placeholders: string[] = []
+  const FENCE = /^([ \t]*)```([\w-]*)\n([\s\S]*?)\n\1```/gm
+
+  const stashed = markdown.replace(FENCE, (_match, indent: string, langRaw: string, code: string) => {
+    const lang = (langRaw || '').toLowerCase()
+
+    if (lang === 'mermaid') return _match
+
+    const supported = (SHIKI_LANGS as readonly string[]).includes(lang) ? lang : 'text'
+    const html = highlighter.codeToHtml(code, {
+      lang: supported,
+      theme: 'github-dark-dimmed',
+    })
+    const idx = placeholders.push(html) - 1
+    return `${indent}<!--SHIKI_BLOCK_${idx}-->`
   })
+
+  const rendered = micromark(stashed, {
+    extensions: [gfm()],
+    htmlExtensions: [gfmHtml()],
+    allowDangerousHtml: true,
+  })
+
+  return rendered.replace(/<!--SHIKI_BLOCK_(\d+)-->/g, (_m, n: string) => placeholders[Number(n)] ?? '')
 }
