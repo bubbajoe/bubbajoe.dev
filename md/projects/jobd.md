@@ -243,7 +243,7 @@ jobd.deregister("minute-ticker");
 
 The JS runtime also exposes a rich context object on every invocation (`ctx.log`, `ctx.input`, `ctx.env`, `ctx.labels`, `ctx.setOutput`) and a global `jobd` namespace covering logging, cluster info, child-job submission, HTTP, the datastore, broadcasts, and streams.
 
-## Broadcast (MapReduce)
+## Broadcast (enabling MapReduce-style operations)
 
 Sometimes you need every node in the cluster to do something — collect metrics, scan a local cache, run a health check — and aggregate the results. JobD's broadcast API turns that into a single call.
 
