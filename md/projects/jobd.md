@@ -25,7 +25,7 @@ What makes JobD distinct from the crowded job-runner space:
 
 1. **Multiple first-class execution backends.** Containers via Docker (Bollard), JavaScript/TypeScript via the embedded [Boa](https://github.com/boa-dev/boa) engine with OXC transpilation, and native shell commands — all behind one API, one CLI, and one event bus.
 2. **DAG pipelines with typed I/O.** Define a graph of Jobs, wire outputs into inputs, mark steps as `continue_on_failure`, attach retry policies per step. JobD walks the DAG and schedules ready nodes as their dependencies complete.
-3. **Leaderless consensus (Tempo).** The cluster uses a Tempo-style consensus protocol — any node can accept writes, quorum-based fast/slow paths, no leader election to lose. Job scheduling and DAG state transitions get exactly-once semantics where possible.
+3. **Leaderless consensus (Tempo).** The cluster uses a [Tempo](https://vitorenes.org/publication/enes-tempo)-style consensus protocol — any node can accept writes, quorum-based fast/slow paths, no leader election to lose. Job scheduling and DAG state transitions get exactly-once semantics where possible.
 4. **A real event system.** Every lifecycle moment (`jobd:job:started`, `jobd:pipeline:failed`, `jobd:leader:changed`, ...) is a first-class event. JavaScript jobs can subscribe; YAML hooks can fan them out to Slack, webhooks, or other JS modules.
 5. **Kafka-like event streams built in.** Topics, partitions, consumer groups, offsets, batched consumers — without standing up a separate Kafka cluster just to wire two jobs together.
 
