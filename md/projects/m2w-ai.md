@@ -1,8 +1,8 @@
 ---
 title: 'M2W.ai - AI Manga Editor'
 subtitle: startup
-created: '2025-02-01'
-updated: '2026-05-29'
+created: '2025-05-29'
+updated: '2026-06-19'
 tags:
   - startup
   - manga
@@ -12,7 +12,7 @@ tags:
   - tokyo
 ---
 
-**M2W** is an AI manga editor. Manga artist upload a finished chapter and get usable editorial notes within minutes — pacing, panel composition, eye flow, lettering, dialogue, art continuity, and narrative arc — across six languages. I quit my last job to work on this full-time, and it's where the bulk of my time goes today.
+**M2W** is an AI manga editor. Manga artist upload a rough draft or finished chapter pages and get usable editorial notes within minutes — pacing, panel composition, eye flow, lettering, dialogue, art continuity, and narrative arc — across six languages. I quit my last job to work on this full-time, and it's where the bulk of my time goes today. We are a team of two, and we are based in Tokyo, Japan. My co-founder is [Sean Hora](https://www.linkedin.com/in/seanhora).
 
 ## The problem
 
@@ -28,6 +28,10 @@ The result is a vast middle class of manga that's drawn with real skill but suff
 
 That gap is the business.
 
+To be clear, we are not trying to replace human editors. We are trying to help manga artists and editors work together to make better manga. We see this as a tool that both artists, writers, and/or editors can use to make a better manga.
+
+There's another way to look at what an editor does: they assess risk. Every time an editor backs one chapter or series over another, they're making a bet — an investment to publish work A instead of work B. We think that bet is the real core of what we're building. An editor's job is much bigger than that, of course — keeping the artist on schedule, handling the marketing and sales of a series or magazine — but our main goal is to build a system that can do that part well. What we're building right now is the first piece: a system that can read and understand a manga, and give feedback on what should be fixed.
+
 ## What M2W is
 
 M2W is **the editor in the workflow** for Manga artist who don't have one or want quicker feedback. The interaction is intentionally familiar:
@@ -40,7 +44,6 @@ Three things make that proposition real instead of a generic "AI feedback" tool:
 
 - **It actually reads a manga.** The pipeline reasons over a sequence of pages, not a single image at a time. It tracks characters across panels, holds dialogue context across pages, and keeps a rolling summary of the story so continuity comments are continuity comments and not hallucinations.
 - **It's anchored in real editorial craft.** The rubric the AI is graded against is shaped by **real manga editors** — people working at major Japanese publishers and seasoned freelancers. They don't deliver reviews to customers; they steer the AI by reviewing its output on an ongoing basis, sharpening the rubric, and rejecting whatever doesn't read like an editor would actually say.
-- **It works in the languages Manga artist actually publish in.** First-class English and Japanese. Second-class Spanish, Chinese, Korean, and French. The pipeline analyses the original art and dialogue, not a translation.
 
 ## Who it's for
 
@@ -52,22 +55,23 @@ Three customer wedges, in roughly the order I expect them to convert:
 | **Aspiring pros**                  | Working on one-shots and serialisation pitches for *Shōnen Jump+*, *Weekly Shōnen Magazine*, etc.  | Submission slush piles are unforgiving. A pre-submission pass that catches structural problems is gold. |
 | **Indie studios & translators**    | Small teams shipping manga, manhwa, manhua to global readers. Some in-house editing, never enough. | Wants a tireless first-pass editor that scales with volume — frees their humans for the hard calls.    |
 
-Eventually: publishers themselves, as an internal tool — but that's a different sales motion and a problem for later.
+Eventually: publishers themselves, as an internal tool — but that's depends on if we decide to sell to publishers or not.
 
 ## Why this is the right moment
 
 Three things had to be true at once for this product to be possible. They became true in the last ~18 months:
 
 1. **Multimodal models got good enough to reason about sequences of images.** Gemini, OpenAI, Grok Models — these can hold ~1000s of pages of context, follow visual continuity, and recognize any nuances that we define as editor notes. Two years ago this was not possible.
-2. **Manga went global, fast.** Webtoon, Tapas, MangaPlus, the explosion of indie platforms — there are now far more people publishing manga than there are editors to support them, and the gap is widening every quarter.
-3. **Number of Manga artists is growing fast.**
-With manga itself being a global medium, the number of manga artists is growing fast. This means that the demand for more high-quality manga is growing fast, which means that the demand for more high-quality manga editors is growing fast.
+2. **Manga went global, fast.** Webtoon, Tapas, MangaPlus, the explosion of indie platforms — there are now far more people publishing manga than there are editors to support them, and the gap is widening every quarter. There are also a bunch of contests going on all over the world, which is a funnel into the manga industry.
+3. **Publishers are looking for ways to scale their editorial processa.** Publishers are looking for ways to scale their editorial process, and they are looking for ways to do it cheaper and faster. Usually through editorial firms ran by ex-editors or freelance editors.
 
 ## The editorial moat
 
 The technically interesting part of M2W is the AI pipeline. The *defensible* part is the editorial process around it.
 
 Anyone can wire up a frontier model and ask it for feedback on a manga page. The output will be confident, fluent, and almost entirely wrong in the ways that matter — the model will praise composition that misreads, suggest dialogue tweaks that flatten the character, and miss the structural issues a real editor would catch in seconds.
+
+There are also companies working on the editorial process with AI — Mantra and a few others — but most of them are focused on translation and typesetting. Our focus is different: the discovery and marketing-analysis side of editing. That's the part we think is the most lucrative, and it's where we're putting our energy.
 
 What makes M2W's output usable instead of plausible-sounding noise:
 
@@ -78,7 +82,7 @@ What makes M2W's output usable instead of plausible-sounding noise:
 
 This is the part I expect to compound. The product gets better the longer it runs, because the rubric and the eval set both grow with usage — and that's not something a competitor can copy by pointing a fresh model at the same problem.
 
-## Where I am
+## Where We am
 
 M2W is **live and pre-revenue** as of May 2026, running with early creators around the world. The current focus is sharpening the rubric with editor feedback, expanding the kinds of issues the AI catches reliably, and getting the first paying tiers shaped right.
 
