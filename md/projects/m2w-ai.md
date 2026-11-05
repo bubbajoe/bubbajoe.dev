@@ -1,5 +1,9 @@
 ---
 title: 'M2W.ai - AI Manga Editor'
+summary: 'AI manga editor — editorial notes on pacing, panel flow and lettering in six languages.'
+domain: ai
+status: running
+featured: true
 subtitle: startup
 created: '2025-05-29'
 updated: '2026-06-19'

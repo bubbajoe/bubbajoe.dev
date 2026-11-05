@@ -1,5 +1,8 @@
 ---
 title: 'DGate - Dynamic API Gateway'
+summary: 'Go API gateway with hot-loaded TypeScript/JavaScript modules.'
+domain: infra
+status: stable
 subtitle: open-source
 created: '2023-04-02'
 updated: '2024-04-16'

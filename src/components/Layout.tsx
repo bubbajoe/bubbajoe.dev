@@ -1,69 +1,87 @@
 import Head from 'next/head'
-import Image from 'next/image'
-
-import styles from './layout.module.css'
-import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import type { ReactNode } from 'react'
 
-export const siteTitle = 'bubbajoe.dev'
+import styles from './Layout.module.css'
+import { buildRev, buildYear, links, siteDescription, siteTitle } from '@/lib/site'
 
-export default function Layout({ children, title="home", backName="home", backHref="/" }) {
+type LayoutProps = {
+  children: ReactNode
+  /** Page title; the site name is appended automatically. */
+  title?: string
+  description?: string
+  /** Breadcrumb shown after the brand, e.g. "system diagram" or "projects". */
+  section?: string
+  /** Drawing sheet label in the header, e.g. "1/3". */
+  sheet?: string
+}
+
+const NAV = [
+  { href: '/projects', label: 'Projects' },
+  { href: '/blog', label: 'Blog' },
+]
+
+export default function Layout({ children, title, description = siteDescription, section, sheet = '1/1' }: LayoutProps) {
+  const { pathname } = useRouter()
+  const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle
+
   return (
-    <div className={styles.container}>
+    <>
       <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta
-          name="description"
-          content="Learn how to build a personal website using Next.js"
-        />
-        <meta
-          property="og:image"
-          content="https://github.com/bubbajoe.png"
-        />
-        <meta name="og:title" content={siteTitle} />
-        <meta name="twitter:card" content="summary_large_image" />
+        <title>{fullTitle}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={fullTitle} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={links.avatar} />
+        <meta name="twitter:card" content="summary" />
       </Head>
+
+      <a className={styles.skip} href="#content">Skip to content</a>
+
       <header className={styles.header}>
-        {(title === "home") ? (
-            <Image
-              priority
-              src="https://github.com/bubbajoe.png"
-              className={utilStyles.borderCircle}
-              height={144}
-              width={144}
-              alt='bubbajoe.dev'
-            />
-        ) : (
-          <div style={{
-            display: 'flex',
-            justifyContent: "space-between",
-            width: "100%",
-            marginBottom: "2rem"
-          }}>
-          <h2 className={utilStyles.headingLg}>
-            <Link href={backHref} className={utilStyles.colorInherit}>
-              {title} | bubbajoe.dev
-            </Link>
-          </h2>
-            <Link href={"/"}>
-              <Image
-                priority
-                src="https://github.com/bubbajoe.png"
-                className={utilStyles.borderCircle}
-                height={82}
-                width={82}
-                alt={backName}
-              />
-            </Link>
-          </div>
-        )}
-      </header>
-      <main>{children}</main>
-      {title !== "home" && (
-        <div className={styles.backToHome}>
-          <Link href={backHref}>← Back to {backName}</Link>
+        <div className={styles.inner}>
+          <Link href="/" className={styles.brand} aria-label={`${siteTitle} home`}>
+            <i aria-hidden="true" />
+            <span>{siteTitle}</span>
+            {section && <span className={styles.crumb}>/ {section}</span>}
+          </Link>
+          <nav className={styles.nav} aria-label="Primary">
+            {NAV.map(({ href, label }) => {
+              const active = pathname === href || pathname.startsWith(`${href}/`)
+              return (
+                <Link key={href} href={href} aria-current={active ? 'page' : undefined}>
+                  {label}
+                </Link>
+              )
+            })}
+            <a href={links.github} target="_blank" rel="noopener noreferrer">
+              GitHub <span aria-hidden="true">↗</span>
+            </a>
+            <a href={links.linkedin} target="_blank" rel="noopener noreferrer">
+              LinkedIn <span aria-hidden="true">↗</span>
+            </a>
+          </nav>
+          {buildRev && (
+            <div className={styles.rev} aria-hidden="true">
+              Rev {buildRev} · Sheet {sheet}
+            </div>
+          )}
         </div>
-      )}
-    </div>
+      </header>
+
+      <main id="content" className={styles.main}>
+        {children}
+      </main>
+
+      <footer className={styles.footer}>
+        <div className={styles.inner}>
+          <span>
+            © {buildYear} Joe Williams · <a href={links.source} target="_blank" rel="noopener noreferrer">source (MIT)</a>
+          </span>
+          <span className={styles.footNote}>scale 1:1 · all dimensions approximate</span>
+        </div>
+      </footer>
+    </>
   )
 }

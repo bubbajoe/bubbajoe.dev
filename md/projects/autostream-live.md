@@ -1,5 +1,8 @@
 ---
 title: 'Autostream Live - Cloud Media Streaming'
+summary: 'Cloud media streaming over RTMP.'
+domain: data
+status: archived
 created: '2023-04-02'
 updated: '2024-01-21'
 deprecated: true

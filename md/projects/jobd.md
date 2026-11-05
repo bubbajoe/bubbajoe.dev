@@ -1,5 +1,8 @@
 ---
 title: 'JobD - Distributed Job Orchestration'
+summary: 'Distributed job orchestration in Rust: DAG pipelines, retries, leaderless consensus.'
+domain: infra
+status: running
 subtitle: open-source
 created: '2024-08-12'
 updated: '2026-05-29'

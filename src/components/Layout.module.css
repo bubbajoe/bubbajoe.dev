@@ -1,0 +1,143 @@
+.inner {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 var(--page-pad);
+}
+
+.skip {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 10;
+  background: var(--amber);
+  color: #000;
+  padding: 8px 12px;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.skip:focus {
+  top: 12px;
+}
+
+.header .inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+  font: 500 12.5px/1.4 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.brand {
+  color: var(--ink);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.brand:hover {
+  text-decoration: none;
+  color: var(--cyan);
+}
+
+.brand i {
+  width: 13px;
+  height: 13px;
+  border: 2px solid var(--red);
+  transform: rotate(45deg);
+  flex: none;
+}
+
+.crumb {
+  color: var(--dim);
+}
+
+.nav {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  color: var(--dim);
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+}
+
+.nav a:hover {
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+.nav a[aria-current='page'] {
+  color: var(--ink);
+  border-bottom-color: var(--red);
+}
+
+.rev {
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 var(--page-pad);
+}
+
+.footer {
+  margin-top: 56px;
+}
+
+.footer .inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px 24px;
+  flex-wrap: wrap;
+  padding-top: 18px;
+  padding-bottom: 28px;
+  border-top: 1px solid var(--line);
+  color: var(--mute);
+  font: 12px/1.6 var(--mono);
+  letter-spacing: 0.04em;
+}
+
+.footer a {
+  color: var(--dim);
+}
+
+@media (max-width: 960px) {
+  .rev {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .header .inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding-top: 14px;
+    padding-bottom: 12px;
+  }
+
+  .crumb {
+    display: none;
+  }
+
+  .nav {
+    gap: 6px 20px;
+  }
+
+  .footer .inner {
+    flex-direction: column;
+  }
+}

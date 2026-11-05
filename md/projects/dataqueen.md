@@ -1,5 +1,8 @@
 ---
 title: 'DataQueen - Cloud Data Warehouse/Lake'
+summary: 'Cloud data lake on Apache DataFusion.'
+domain: data
+status: archived
 created: '2023-04-22'
 deprecated: true
 tags: ['data-lake', 'cloud', 's3', 'apache-datafusion']
