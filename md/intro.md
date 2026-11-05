@@ -16,7 +16,8 @@ Recent things interested/working on:
 
 - My Open-source Distributed Container Runtime [JobD](/projects/jobd) similar to Cloud Run Jobs
 - My Open-source API Gateways/LB - [DGate](/projects/dgate) (similar to Kong)
-- Agentic Robotics Platform - Still very early and not much to show yet.
+- Proactive agents - [Convolt.ai](/projects/convolt-ai)
+- My [Agentic Home Lab](/projects/agentic-home-lab) - Harvester, 3 Linux machines and 2 Mac minis; run by AI, used for AI, to make more AI
 - Data Engineering (Data Pipelines, Data Streaming, [DataQueen](/projects/dataqueen))
 - Dev-ops (Github Actions, GitLab CI/CD, Kubernetes, and Terraform...)
 - Ditributed Systems & Consensus (Raft, Paxos, etc.)

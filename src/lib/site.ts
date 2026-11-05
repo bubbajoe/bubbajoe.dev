@@ -44,23 +44,24 @@ export type Domain = {
 
 // Order here is the order on the diagram.
 export const domains: Domain[] = [
-  { id: 'ai', title: 'AI & agents', summary: 'LLM tooling, agentic robotics' },
+  { id: 'ai', title: 'AI & agents', summary: 'Agents, LLM products, AI infra' },
   { id: 'infra', title: 'Distributed systems', summary: 'Raft, Paxos, k8s, Terraform' },
   { id: 'data', title: 'Data & video', summary: 'Pipelines, streaming, RTMP' },
 ]
 
 export const FALLBACK_DOMAIN: Domain = { id: 'misc', title: 'Other', summary: 'Everything else' }
 
-// Nodes that appear on the diagram but have no project page yet.
-export const plannedNodes = [
-  {
-    id: 'robotics',
-    name: 'Agentic robotics',
-    summary: 'Very early. Nothing to show yet.',
-    domain: 'ai',
-    status: 'queued' as ProjectStatus,
-  },
-]
+export type PlannedNode = {
+  id: string
+  name: string
+  summary: string
+  domain: string
+  status: ProjectStatus
+}
+
+// Nodes that appear on the diagram but have no project page yet, e.g.
+// { id: 'robotics', name: 'Agentic robotics', summary: 'Very early.', domain: 'ai', status: 'queued' }
+export const plannedNodes: PlannedNode[] = []
 
 // Milestones that are not derivable from project frontmatter. Dates are YYYY-MM.
 export const milestones = [

@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import StatusBadge from './StatusBadge'
 import styles from './SystemDiagram.module.css'
-import { dateSpan, type DiagramNode, type DomainGroup } from '@/lib/projectMeta'
+import { dateSpan, STATUSES, type DiagramNode, type DomainGroup } from '@/lib/projectMeta'
 import { links } from '@/lib/site'
 
 type Props = {
@@ -37,16 +37,18 @@ function NodeCard({ node }: { node: DiagramNode }) {
 }
 
 export default function SystemDiagram({ groups, yoe }: Props) {
+  const present = new Set(groups.flatMap((g) => g.nodes.map((n) => n.status)))
+  const legend = STATUSES.filter((st) => present.has(st))
+
   return (
     <figure className={styles.board} aria-labelledby="fig-1">
       <figcaption id="fig-1" className={styles.caption}>
         Fig. 1 — Joe → domains → projects
       </figcaption>
       <ul className={styles.legend} aria-label="Status legend">
-        <li><StatusBadge status="running" /></li>
-        <li><StatusBadge status="stable" /></li>
-        <li><StatusBadge status="queued" /></li>
-        <li><StatusBadge status="archived" /></li>
+        {legend.map((st) => (
+          <li key={st}><StatusBadge status={st} /></li>
+        ))}
       </ul>
 
       <div className={styles.heads} aria-hidden="true">

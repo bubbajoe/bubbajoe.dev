@@ -90,7 +90,7 @@ export function groupByDomain(projects: FileMetadata[]): DomainGroup[] {
       nodes: nodes
         .filter((n) => (known.has(n.domain) ? n.domain : FALLBACK_DOMAIN.id) === domain.id)
         // Array.prototype.sort is stable, so the incoming (date) order is kept within a status.
-        .sort((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status]),
+        .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || STATUS_ORDER[a.status] - STATUS_ORDER[b.status]),
     }))
     .filter((g) => g.nodes.length > 0)
 }
