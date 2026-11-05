@@ -18,7 +18,12 @@
   font-size: 17px;
 }
 
-.lede b {
+.lede p {
+  margin: 0;
+}
+
+.lede b,
+.lede strong {
   color: var(--ink);
   font-weight: 500;
 }

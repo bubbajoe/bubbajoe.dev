@@ -4,14 +4,15 @@ import Layout from '@/components/Layout'
 import SystemDiagram from '@/components/SystemDiagram'
 import TokyoClock from '@/components/TokyoClock'
 import s from '@/styles/sections.module.css'
-import type { FileMetadata } from '@/lib/common'
+import { processMarkdown, type FileMetadata } from '@/lib/common'
 import { getIntroMarkdown } from '@/lib/intro'
 import { getSortedProjectsMetadata } from '@/lib/projects'
 import { getSortedBlogsMetadata } from '@/lib/blogs'
 import { buildEventLog, groupByDomain } from '@/lib/projectMeta'
-import { links, offHours, yearsOfExperience } from '@/lib/site'
+import { hero, links, offHours, yearsOfExperience } from '@/lib/site'
 
 type HomeProps = {
+  heroHtml: string
   introHtml: string
   projects: FileMetadata[]
   blogCount: number
@@ -20,7 +21,7 @@ type HomeProps = {
 
 const LEVEL_CLASS: Record<string, string> = { OK: s.ok, INFO: s.info, WARN: s.warn }
 
-export default function Home({ introHtml, projects, blogCount, yoe }: HomeProps) {
+export default function Home({ heroHtml, introHtml, projects, blogCount, yoe }: HomeProps) {
   const groups = groupByDomain(projects)
   const events = buildEventLog(projects)
 
@@ -28,21 +29,17 @@ export default function Home({ introHtml, projects, blogCount, yoe }: HomeProps)
     <Layout section="system diagram" sheet="1/3">
       <section className={s.hero}>
         <div>
-          <p className={s.eyebrow}>// engineer → founder</p>
+          <p className={s.eyebrow}>{hero.eyebrow}</p>
           <h1 className={s.title}>
-            <b>Joe Williams</b>
+            <b>{hero.name}</b>
             <br />
-            designs systems.
+            {hero.tagline}
           </h1>
           <div className={s.dimLine} aria-hidden="true">
             <span>~{yoe} yrs · software · Japan</span>
           </div>
         </div>
-        <p className={s.lede}>
-          Distributed-systems engineer, now co-founder of <Link href="/projects/m2w-ai">M2W.ai</Link>, an AI
-          manga editor. Previously at <b>Indeed</b>. Writes mostly <b>Go</b> and <b>Rust</b>. Based in{' '}
-          <b>Tokyo</b>.
-        </p>
+        <div className={s.lede} dangerouslySetInnerHTML={{ __html: heroHtml }} />
       </section>
 
       <SystemDiagram groups={groups} yoe={yoe} />
@@ -115,14 +112,16 @@ export default function Home({ introHtml, projects, blogCount, yoe }: HomeProps)
 }
 
 export async function getStaticProps() {
-  const [introMd, projects, blogs] = await Promise.all([
+  const [introMd, projects, blogs, heroHtml] = await Promise.all([
     getIntroMarkdown(),
     getSortedProjectsMetadata(),
     getSortedBlogsMetadata(),
+    processMarkdown(hero.lede),
   ])
   const yoe = yearsOfExperience()
   return {
     props: {
+      heroHtml,
       introHtml: introMd.contentHtml.replace('{{YOE}}', yoe),
       projects,
       blogCount: blogs.length,

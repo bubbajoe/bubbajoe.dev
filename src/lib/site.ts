@@ -8,6 +8,16 @@ export const siteDescription =
 export const buildRev = process.env.NEXT_PUBLIC_BUILD_REV || ''
 export const buildYear = buildRev.split('.')[0] || ''
 
+// Home page hero. `lede` is markdown, rendered at build time.
+export const hero = {
+  eyebrow: '// engineer → founder',
+  name: 'Joe Williams',
+  tagline: 'designs systems.',
+  lede:
+    'Distributed-systems engineer, now co-founder of [M2W.ai](/projects/m2w-ai), an AI manga editor. ' +
+    'Previously at **Indeed**. Writes mostly **Go** and **Rust**. Based in **Tokyo**.',
+}
+
 export const links = {
   github: 'https://github.com/BubbaJoe',
   linkedin: 'https://www.linkedin.com/in/bubbajoe',

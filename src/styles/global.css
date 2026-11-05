@@ -220,11 +220,6 @@ h4 {
   white-space: pre;
 }
 
-.prose pre.shiki code .line {
-  display: block;
-  min-height: 1.55em;
-}
-
 .prose pre::-webkit-scrollbar {
   height: 8px;
 }

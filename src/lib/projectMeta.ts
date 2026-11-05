@@ -2,7 +2,7 @@
 import type { FileMetadata } from './common'
 import { domains, FALLBACK_DOMAIN, milestones, plannedNodes, type Domain, type ProjectStatus } from './site'
 
-const STATUSES: ProjectStatus[] = ['running', 'stable', 'archived', 'queued']
+export const STATUSES: ProjectStatus[] = ['running', 'stable', 'archived', 'queued']
 const STATUS_ORDER: Record<ProjectStatus, number> = { running: 0, stable: 1, queued: 2, archived: 3 }
 
 export type DiagramNode = {
@@ -29,9 +29,26 @@ export function splitTitle(title = ''): { name: string; tagline: string } {
 }
 
 export function projectStatus(p: Pick<FileMetadata, 'status' | 'deprecated'>): ProjectStatus {
-  const s = (p.status || '').toLowerCase() as ProjectStatus
+  const s = String(p.status || '').trim().toLowerCase() as ProjectStatus
   if (STATUSES.includes(s)) return s
   return p.deprecated ? 'archived' : 'running'
+}
+
+export function normalizeDomain(domain?: string): string {
+  const d = typeof domain === 'string' ? domain.trim().toLowerCase() : ''
+  return d || FALLBACK_DOMAIN.id
+}
+
+/** Problems worth flagging at build time (typos would otherwise fall back silently). */
+export function metadataWarnings(p: FileMetadata): string[] {
+  const out: string[] = []
+  if (p.domain !== undefined && !domains.some((d) => d.id === normalizeDomain(p.domain))) {
+    out.push(`unknown domain "${p.domain}" (expected ${domains.map((d) => d.id).join(', ')}); shown under "${FALLBACK_DOMAIN.title}"`)
+  }
+  if (p.status !== undefined && !STATUSES.includes(String(p.status).trim().toLowerCase() as ProjectStatus)) {
+    out.push(`unknown status "${p.status}" (expected ${STATUSES.join(', ')}); falling back to ${projectStatus({ deprecated: p.deprecated })}`)
+  }
+  return out
 }
 
 /** "2025-05-29" → "2025-05"; tolerates missing/short values. */
@@ -54,11 +71,11 @@ export function toNode(p: FileMetadata): DiagramNode {
     name,
     summary: p.summary || tagline,
     status: projectStatus(p),
-    domain: p.domain || FALLBACK_DOMAIN.id,
+    domain: normalizeDomain(p.domain),
     href: `/projects/${p.id}`,
     featured: Boolean(p.featured),
-    created: p.created || null,
-    updated: p.updated || null,
+    created: p.created || undefined,
+    updated: p.updated || undefined,
   }
 }
 
@@ -78,11 +95,14 @@ export function groupByDomain(projects: FileMetadata[]): DomainGroup[] {
     .filter((g) => g.nodes.length > 0)
 }
 
-export function buildEventLog(projects: FileMetadata[], limit = 8): LogEvent[] {
+const byDateDesc = (a: LogEvent, b: LogEvent) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0)
+
+/** Milestones are always shown; project starts are capped to the most recent `maxProjectEvents`. */
+export function buildEventLog(projects: FileMetadata[], maxProjectEvents = 6): LogEvent[] {
   const started: LogEvent[] = projects
     .filter((p) => yearMonth(p.created))
     .map((p) => ({ date: yearMonth(p.created), level: 'INFO', subject: p.id, text: 'project started' }))
-  return [...milestones, ...started]
-    .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
-    .slice(0, limit)
+    .sort(byDateDesc)
+    .slice(0, maxProjectEvents)
+  return [...milestones, ...started].sort(byDateDesc)
 }
