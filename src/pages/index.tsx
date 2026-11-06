@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import Layout from '@/components/Layout'
 import SystemDiagram from '@/components/SystemDiagram'
+import Typewriter from '@/components/Typewriter'
 import TokyoClock from '@/components/TokyoClock'
 import s from '@/styles/sections.module.css'
 import { processMarkdown, type FileMetadata } from '@/lib/common'
@@ -19,7 +20,7 @@ type HomeProps = {
   yoe: string
 }
 
-const LEVEL_CLASS: Record<string, string> = { OK: s.ok, INFO: s.info, WARN: s.warn }
+const LEVEL_CLASS: Record<string, string> = { OK: s.ok, INFO: s.info, WARN: s.warn, DEBUG: s.debug }
 
 export default function Home({ heroHtml, introHtml, projects, blogCount, yoe }: HomeProps) {
   const groups = groupByDomain(projects)
@@ -33,7 +34,7 @@ export default function Home({ heroHtml, introHtml, projects, blogCount, yoe }: 
           <h1 className={s.title}>
             <b>{hero.name}</b>
             <br />
-            {hero.tagline}
+            <Typewriter phrases={hero.phrases} />
           </h1>
           <div className={s.dimLine} aria-hidden="true">
             <span>~{yoe} yrs · software · Japan</span>
@@ -61,11 +62,18 @@ export default function Home({ heroHtml, introHtml, projects, blogCount, yoe }: 
             </h2>
             <ol className={s.log}>
               {events.map((e) => (
-                <li key={`${e.date}-${e.subject}-${e.text}`}>
+                <li key={`${e.date}-${e.subject}-${e.text}`} className={e.redacted ? s.debugRow : undefined}>
                   <time className={s.logDate}>{e.date}</time>
                   <span className={`${s.logLevel} ${LEVEL_CLASS[e.level] || ''}`}>{e.level}</span>
                   <span>
-                    <b>{e.subject}</b>: {e.text}
+                    {e.redacted ? (
+                      <span className={s.redacted} style={{ width: `${e.redacted}ch` }} title="Redacted for privacy">
+                        <span className="visually-hidden">redacted for privacy</span>
+                      </span>
+                    ) : (
+                      <b>{e.subject}</b>
+                    )}
+                    : {e.text}
                   </span>
                 </li>
               ))}

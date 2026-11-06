@@ -1,6 +1,6 @@
 // Pure helpers (no fs) so they can be imported by client components.
 import type { FileMetadata } from './common'
-import { domains, FALLBACK_DOMAIN, milestones, plannedNodes, type Domain, type ProjectStatus } from './site'
+import { domains, FALLBACK_DOMAIN, milestones, plannedNodes, redactedLog, type Domain, type ProjectStatus } from './site'
 
 export const STATUSES: ProjectStatus[] = ['running', 'stable', 'archived', 'queued']
 const STATUS_ORDER: Record<ProjectStatus, number> = { running: 0, stable: 1, queued: 2, archived: 3 }
@@ -19,7 +19,14 @@ export type DiagramNode = {
 
 export type DomainGroup = { domain: Domain; nodes: DiagramNode[] }
 
-export type LogEvent = { date: string; level: string; subject: string; text: string }
+export type LogEvent = {
+  date: string
+  level: string
+  subject: string
+  text: string
+  /** Set for redacted entries: width of the redaction bar in characters. */
+  redacted?: number
+}
 
 /** "M2W.ai - AI Manga Editor" → { name: "M2W.ai", tagline: "AI Manga Editor" } */
 export function splitTitle(title = ''): { name: string; tagline: string } {
@@ -97,12 +104,12 @@ export function groupByDomain(projects: FileMetadata[]): DomainGroup[] {
 
 const byDateDesc = (a: LogEvent, b: LogEvent) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0)
 
-/** Milestones are always shown; project starts are capped to the most recent `maxProjectEvents`. */
+/** Milestones and redacted entries are always shown; project starts are capped to the most recent `maxProjectEvents`. */
 export function buildEventLog(projects: FileMetadata[], maxProjectEvents = 6): LogEvent[] {
   const started: LogEvent[] = projects
     .filter((p) => yearMonth(p.created))
     .map((p) => ({ date: yearMonth(p.created), level: 'INFO', subject: p.id, text: 'project started' }))
     .sort(byDateDesc)
     .slice(0, maxProjectEvents)
-  return [...milestones, ...started].sort(byDateDesc)
+  return [...milestones, ...redactedLog, ...started].sort(byDateDesc)
 }

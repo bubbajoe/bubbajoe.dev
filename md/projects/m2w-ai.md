@@ -5,7 +5,7 @@ domain: ai
 status: running
 featured: true
 subtitle: startup
-created: '2025-05-29'
+created: '2025-11'
 updated: '2026-06-19'
 tags:
   - startup

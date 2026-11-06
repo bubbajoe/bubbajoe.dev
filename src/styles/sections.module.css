@@ -220,6 +220,23 @@
   color: var(--amber);
 }
 
+.debug {
+  color: var(--mute);
+}
+
+.debugRow {
+  color: var(--mute);
+}
+
+.redacted {
+  display: inline-block;
+  height: 0.95em;
+  vertical-align: -0.15em;
+  background: var(--dim);
+  opacity: 0.55;
+  border-radius: 1px;
+}
+
 .titleBlock {
   width: 100%;
   border-collapse: collapse;

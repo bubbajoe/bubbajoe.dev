@@ -12,7 +12,8 @@ export const buildYear = buildRev.split('.')[0] || ''
 export const hero = {
   eyebrow: '// engineer → founder',
   name: 'Joe Williams',
-  tagline: 'designs systems.',
+  // Typed in order by the hero cursor; the last one stays.
+  phrases: ['designs systems', 'orchestrates agents', 'gets sh*t done'],
   lede:
     'Distributed-systems engineer, now co-founder of [M2W.ai](/projects/m2w-ai), an AI manga editor. ' +
     'Previously at **Indeed**. Writes mostly **Go** and **Rust**. Based in **Tokyo**.',
@@ -68,6 +69,17 @@ export const milestones = [
   { date: '2026-04', level: 'OK', subject: 'joe', text: 'left Indeed → M2W.ai full-time' },
   { date: '2018-12', level: 'OK', subject: 'joe', text: 'started in software, in Japan' },
   { date: '2014-05', level: 'INFO', subject: 'joe', text: 'joined GitHub' },
+]
+
+// DEBUG lines in the event log: real-ish activity, redacted for privacy. Dates are deliberately
+// approximate. `redacted` is the width of the redaction bar, in characters.
+export const redactedLog = [
+  { date: '2026-08', level: 'DEBUG', subject: 'redacted', text: 'PoC started', redacted: 7 },
+  { date: '2026-01', level: 'DEBUG', subject: 'redacted', text: 'project done', redacted: 5 },
+  { date: '2025-09', level: 'DEBUG', subject: 'redacted', text: 'client project started', redacted: 9 },
+  { date: '2024-12', level: 'DEBUG', subject: 'redacted', text: 'migration done', redacted: 6 },
+  { date: '2022-10', level: 'DEBUG', subject: 'redacted', text: 'side project started', redacted: 8 },
+  { date: '2021-03', level: 'DEBUG', subject: 'redacted', text: 'project done', redacted: 7 },
 ]
 
 export const offHours = ['anime & manga', 'movies', 'podcasts', 'bbq', 'gym', 'robotics']
