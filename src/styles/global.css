@@ -1,33 +1,76 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: Nerd Font, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  line-height: 1.6;
-  font-size: 18px;
-
-  background: #323232;
-  color: #bababa;
+/* ── Blueprint design tokens ─────────────────────────────────────────────
+   Text colours are checked against --bg and --panel for WCAG AA (≥ 4.5:1):
+   ink 12.6, dim 6.3, mute 5.1, cyan 9.7, red 5.1, amber 9.8, green 9.6 (worst case on --panel). */
+:root {
+  --bg: #0b1d36;
+  --panel: #0e2443;
+  --panel-2: #081629;
+  --ink: #dce8ff;
+  --dim: #8ea6cc;
+  --mute: #7d95bf;
+  --line: rgba(160, 195, 255, 0.28);
+  --line-strong: rgba(160, 195, 255, 0.5);
+  --grid: rgba(160, 195, 255, 0.07);
+  --grid-major: rgba(160, 195, 255, 0.14);
+  --cyan: #7fd7ff;
+  --red: #ff5a4e;
+  --amber: #ffc35a;
+  --green: #5fe3a1;
+  --orange: #ff9a3c;
+  --page-pad: 30px;
+  color-scheme: dark;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-a {
-  color: red;
-  text-decoration: none;
-  font-weight: 500;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--ink);
 }
 
-a.deprecated {
-  color: rgba(255, 0, 0, 0.477);
+body {
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-position: -1px -1px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  /* Defined here, not on :root: next/font sets --font-sans/--font-mono on this element. */
+  --sans: var(--font-sans, 'IBM Plex Sans'), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: var(--font-mono, 'IBM Plex Mono'), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--cyan);
+  text-decoration: none;
 }
 
 a:hover {
-  color: red;
-  font-weight:900;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
 }
 
 img {
@@ -35,186 +78,228 @@ img {
   display: block;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-main {
-  flex: 1;
-}
-
-footer {
-  width: 100%;
-  height: 50px;
-  color: #585858;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-h1 {
-  font-size: 2rem;
-  line-height: 1.2;
-  font-weight: 900;
-  letter-spacing: -0.05rem;
-  margin: 1rem 0;
-}
-
-h2 {
-  font-size: 1.7rem;
-  line-height: 1.3;
-  font-weight: 800;
-  letter-spacing: -0.05rem;
-  margin: 1rem 0;
-}
-
-h3 {
-  font-size: 1.4rem;
-  line-height: 1.4;
-  margin: 1rem 0;
-}
-
+h1,
+h2,
+h3,
 h4 {
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: rgba(127, 215, 255, 0.3);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ── Long-form content (markdown from /md) ─────────────────────────────── */
+.prose {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--ink);
+  min-width: 0;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose p,
+.prose li {
+  color: #c4d3ee;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--ink);
+  font-weight: 600;
+  margin: 2.2em 0 0.7em;
+  scroll-margin-top: 24px;
+}
+
+.prose h1 {
+  font-size: 1.75rem;
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid var(--line);
+}
+
+.prose h2 {
+  font-size: 1.45rem;
+}
+
+.prose h3 {
   font-size: 1.2rem;
-  line-height: 1.5;
 }
 
-h5 {
-  font-size: 1rem;
-  line-height: 1.6;
+.prose h4 {
+  font-size: 1.05rem;
 }
 
-@font-face {
-  font-family: "Nerd Font";
-  src: url("/fonts/JetBrainsMonoLightNerd.ttf");
-  font-weight: bold;
+.prose h1::before,
+.prose h2::before {
+  content: '§ ';
+  color: var(--mute);
+  font-family: var(--mono);
+  font-weight: 400;
 }
 
-@font-face {
-  font-family: "Nerd Font";
-  src: url("/fonts/JetBrainsMonoThinNerd.ttf");
+.prose a {
+  color: var(--cyan);
+  text-decoration: underline;
+  text-decoration-color: rgba(127, 215, 255, 0.4);
+  text-underline-offset: 3px;
 }
 
-p {
-  font-weight: lighter;
+.prose a:hover {
+  text-decoration-color: var(--cyan);
 }
 
-/* ---------- Code blocks ---------- */
-
-/* Inline code: subtle pill against the page background */
-code {
-  font-family: "Nerd Font", ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.92em;
-  background: #1e1e1e;
-  color: #e6e6e6;
-  padding: 0.15em 0.4em;
-  border-radius: 4px;
-  border: 1px solid #2a2a2a;
+.prose strong {
+  color: var(--ink);
+  font-weight: 600;
 }
 
-/* Block code: dark card with left accent and horizontal scroll.
-   Shiki emits <pre class="shiki ..."> with its own background; we override
-   to keep one consistent card style site-wide while still using shiki's
-   token colors. */
-pre,
-pre.shiki {
-  background: #1b1b1b !important;
-  border: 1px solid #2a2a2a;
-  border-left: 3px solid #e53935;
-  border-radius: 8px;
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
+}
+
+.prose li::marker {
+  color: var(--mute);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px dashed var(--line);
+  margin: 2.5em 0;
+}
+
+.prose img {
+  border: 1px solid var(--line);
+  margin: 1.5em 0;
+}
+
+.prose code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 0.1em 0.4em;
+}
+
+.prose pre,
+.prose pre.shiki {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--panel-2) !important;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--cyan);
   padding: 1rem 1.2rem;
-  margin: 1.25rem 0;
+  margin: 1.5rem 0;
   overflow-x: auto;
   line-height: 1.55;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
   -webkit-overflow-scrolling: touch;
   tab-size: 2;
-  font-family: "Nerd Font", ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.92em;
 }
 
-/* Reset inline-code styles when nested in a pre block; let shiki's
-   per-token inline color styles win for highlighted blocks. */
-pre code {
+.prose pre code {
   background: transparent;
   border: 0;
   padding: 0;
-  border-radius: 0;
   font-size: 1em;
-  color: #e6e6e6;
   display: block;
   white-space: pre;
-  font-family: inherit;
 }
 
-/* Shiki line wrapper */
-pre.shiki code .line {
-  display: block;
-  min-height: 1.55em;
-}
-
-/* Mermaid diagrams shouldn't get the code-block card treatment */
-pre:has(> code.language-mermaid),
-code.language-mermaid {
-  background: transparent;
-  border: 0;
-  padding: 0;
-  box-shadow: none;
-}
-
-/* Custom scrollbar inside code blocks (WebKit only, graceful elsewhere) */
-pre::-webkit-scrollbar {
+.prose pre::-webkit-scrollbar {
   height: 8px;
 }
-pre::-webkit-scrollbar-thumb {
-  background: #3a3a3a;
-  border-radius: 4px;
+
+.prose pre::-webkit-scrollbar-thumb {
+  background: var(--line);
 }
-pre::-webkit-scrollbar-track {
+
+/* Mermaid diagrams render into the code block; drop the code-block chrome. */
+.prose code.language-mermaid,
+.prose pre:has(> code.language-mermaid) {
+  background: transparent !important;
+  border: 0;
+  padding: 0;
+  display: block;
+  white-space: normal;
+  text-align: center;
+}
+
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  font-size: 0.92em;
+  display: block;
+  overflow-x: auto;
+}
+
+.prose th,
+.prose td {
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  background: var(--panel);
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 0.85em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding: 0.7rem 1.1rem;
+  border-left: 3px solid var(--amber);
+  background: rgba(255, 195, 90, 0.06);
+}
+
+.prose blockquote blockquote {
+  margin: 0;
+  padding: 0;
+  border: 0;
   background: transparent;
 }
 
-/* ---------- GFM tables ---------- */
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1.25rem 0;
-  font-size: 0.95em;
-}
-
-th,
-td {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #3a3a3a;
-  text-align: left;
-}
-
-th {
-  background: #2a2a2a;
-  font-weight: 700;
-  color: #e6e6e6;
-}
-
-tr:nth-child(even) td {
-  background: #2c2c2c;
-}
-
-/* ---------- Blockquotes ---------- */
-
-blockquote {
-  margin: 1.25rem 0;
-  padding: 0.6rem 1rem;
-  border-left: 3px solid #e53935;
-  background: #2a2a2a;
-  color: #cfcfcf;
-  border-radius: 0 6px 6px 0;
-}
-
-blockquote p {
+.prose blockquote p {
   margin: 0.25rem 0;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --page-pad: 16px;
+  }
+
+  .prose {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

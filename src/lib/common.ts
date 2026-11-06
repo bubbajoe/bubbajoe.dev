@@ -8,6 +8,11 @@ import {createHighlighter, type Highlighter} from 'shiki'
 export type FileMetadata = {
     id: string
     title?: string
+    subtitle?: string
+    summary?: string
+    domain?: string
+    status?: string
+    featured?: boolean
     created?: string
     updated?: string
     tags?: string[]

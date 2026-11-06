@@ -1,0 +1,39 @@
+.box {
+  display: inline-grid;
+  max-width: 100%;
+}
+
+.ghost,
+.live {
+  grid-area: 1 / 1;
+  white-space: pre-wrap;
+}
+
+.ghost {
+  visibility: hidden;
+}
+
+.caret {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.82em;
+  margin: 0 0.03em;
+  vertical-align: -0.08em;
+  background: var(--orange);
+  box-shadow: 0 0 12px rgba(255, 154, 60, 0.45);
+}
+
+.blink {
+  animation: blink 1s steps(1) infinite;
+}
+
+.selected {
+  background: rgba(127, 215, 255, 0.32);
+  border-radius: 2px;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

@@ -10,7 +10,7 @@ function generateSiteMap(posts: FileMetadata[], projects: FileMetadata[]) {
     return '<?xml version="1.0" encoding="UTF-8"?>'+
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+
         `<url><loc>${baseUrl}</loc><lastmod>${deployDate}</lastmod></url>`+
-        `<url><loc>${baseUrl}/blogs</loc><lastmod>${deployDate}</lastmod></url>`+
+        `<url><loc>${baseUrl}/blog</loc><lastmod>${deployDate}</lastmod></url>`+
         `<url><loc>${baseUrl}/projects</loc><lastmod>${deployDate}</lastmod></url>`+
         posts.map(({ id, updated, created }) =>
             `<url><loc>${`${baseUrl}/blog/${id}`}</loc><lastmod>${updated || created || deployDate}</lastmod></url>`).join('\n')+

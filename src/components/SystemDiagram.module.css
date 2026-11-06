@@ -1,0 +1,551 @@
+/*
+ * The diagram is a nested list (root → branches → leaves). All connectors are CSS pseudo-elements
+ * on that structure, so they render server-side, need no JS measuring, and re-flow at every width:
+ *   > 1100px   left-to-right tree: root | domains | projects
+ *   821–1100   root on top, trunk drops into the domain | projects rows
+ *   ≤ 820px    fully indented tree (like `tree`), every connector still drawn
+ */
+
+.board {
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--line);
+  background: rgba(11, 29, 54, 0.6);
+  padding: 40px 30px 30px;
+}
+
+.caption,
+.legend {
+  position: absolute;
+  top: 0;
+  transform: translateY(-50%);
+  background: var(--bg);
+  padding: 2px 10px;
+  font: 500 11px/1.4 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.caption {
+  left: 18px;
+  color: var(--dim);
+}
+
+.legend {
+  right: 18px;
+  display: flex;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+}
+
+.heads {
+  display: grid;
+  grid-template-columns: 260px 210px 1fr;
+  column-gap: 64px;
+  margin-bottom: 18px;
+  font: 500 11px/1.4 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.heads span {
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 6px;
+}
+
+.diagram {
+  --gap: 64px;
+  --bh: 32px; /* branch tick length (half the column gap) */
+  --lh: 32px; /* leaf tick length */
+  --bgap: 28px; /* vertical gap between branches */
+  --lgap: 12px; /* vertical gap between leaves */
+  --stroke: 1.5px;
+  --wire: var(--line-strong);
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  column-gap: var(--gap);
+  align-items: center;
+}
+
+/* ── Nodes ─────────────────────────────────────────────────────────────── */
+.node {
+  position: relative;
+  display: block;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 14px 16px;
+  color: var(--ink);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+a.node:hover {
+  text-decoration: none;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 4px rgba(127, 215, 255, 0.08);
+}
+
+a.node:hover .name {
+  color: var(--cyan);
+}
+
+.id {
+  font: 600 12px/1.4 var(--mono);
+  color: var(--cyan);
+}
+
+.name {
+  margin: 4px 0 2px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  transition: color 0.2s;
+}
+
+.summary {
+  margin: 0;
+  color: var(--dim);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.nodeTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+
+.meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.span {
+  font: 500 11.5px/1.4 var(--mono);
+  color: var(--mute);
+  white-space: nowrap;
+}
+
+.featured {
+  border-color: rgba(255, 90, 78, 0.6);
+  box-shadow: inset 3px 0 0 var(--red);
+}
+
+.featured .id {
+  color: var(--red);
+}
+
+.port {
+  position: absolute;
+  top: 50%;
+  left: -5px;
+  z-index: 1;
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid var(--cyan);
+  background: var(--bg);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.portOut {
+  left: auto;
+  right: -5px;
+}
+
+/* root */
+.root {
+  padding: 18px;
+}
+
+.avatar {
+  width: 76px;
+  height: 76px;
+  border: 1px solid var(--line);
+  filter: grayscale(1) sepia(1) hue-rotate(180deg) saturate(2.2) brightness(0.95);
+  margin-bottom: 12px;
+}
+
+.rootName {
+  margin: 4px 0 2px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.spec {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font: 12px/1.4 var(--mono);
+}
+
+.spec th,
+.spec td {
+  padding: 5px 0;
+  border-top: 1px dashed var(--line);
+  font-weight: 400;
+}
+
+.spec th {
+  text-align: left;
+  color: var(--dim);
+}
+
+.spec td {
+  text-align: right;
+  color: var(--ink);
+}
+
+/* leaf states */
+.archived .node {
+  background: transparent;
+  border-color: rgba(160, 195, 255, 0.2);
+}
+
+.archived .name {
+  color: var(--dim);
+}
+
+.archived .port {
+  border-color: var(--mute);
+}
+
+.queued .node {
+  background: transparent;
+  border-style: dashed;
+  border-color: rgba(255, 195, 90, 0.55);
+}
+
+.queued .port {
+  border-color: var(--amber);
+}
+
+/* ── Wires: desktop (left → right) ─────────────────────────────────────── */
+.branches,
+.leaves {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.branches {
+  gap: var(--bgap);
+}
+
+.leaves {
+  gap: var(--lgap);
+}
+
+.root::after,
+.branch::before,
+.domain::before,
+.domain::after,
+.leaf::before,
+.leaf::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.root::after {
+  top: 50%;
+  left: 100%;
+  width: var(--bh);
+  border-top: var(--stroke) solid var(--cyan);
+}
+
+.branch {
+  position: relative;
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  column-gap: var(--gap);
+  align-items: center;
+}
+
+/* vertical spine between branches, from first centre to last centre */
+.branch::before {
+  left: calc(-1 * var(--bh));
+  top: calc(var(--bgap) / -2);
+  bottom: calc(var(--bgap) / -2);
+  border-left: var(--stroke) solid var(--wire);
+}
+
+.branch:first-child::before {
+  top: 50%;
+}
+
+.branch:last-child::before {
+  bottom: 50%;
+}
+
+.branch:only-child::before {
+  display: none;
+}
+
+.domain::before {
+  top: 50%;
+  right: 100%;
+  width: var(--bh);
+  border-top: var(--stroke) solid var(--wire);
+}
+
+.domain::after {
+  top: 50%;
+  left: 100%;
+  width: var(--lh);
+  border-top: var(--stroke) solid var(--wire);
+}
+
+.leaf {
+  position: relative;
+  --tick: var(--wire);
+  --tick-style: solid;
+}
+
+.leaf.running,
+.leaf.stable {
+  --tick: var(--cyan);
+}
+
+.leaf.queued {
+  --tick: var(--amber);
+  --tick-style: dashed;
+}
+
+.leaf.archived {
+  --tick: var(--line);
+}
+
+.leaf::before {
+  left: calc(-1 * var(--lh));
+  top: calc(var(--lgap) / -2);
+  bottom: calc(var(--lgap) / -2);
+  border-left: var(--stroke) solid var(--wire);
+}
+
+.leaf:first-child::before {
+  top: 50%;
+}
+
+.leaf:last-child::before {
+  bottom: 50%;
+}
+
+.leaf:only-child::before {
+  display: none;
+}
+
+.leaf::after {
+  top: 50%;
+  right: 100%;
+  width: var(--lh);
+  border-top: var(--stroke) var(--tick-style) var(--tick);
+}
+
+@media (min-width: 821px) {
+  /* animated "traffic" on wires into running projects */
+  .leaf.running::after {
+    border-top: 0;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--cyan) 0 5px, transparent 5px 9px);
+    animation: flow 0.9s linear infinite;
+  }
+}
+
+@keyframes flow {
+  to {
+    background-position: 9px 0;
+  }
+}
+
+/* ── Tablet: root on top, trunk drops into the branches ────────────────── */
+@media (max-width: 1100px) {
+  .heads {
+    display: none;
+  }
+
+  .board {
+    padding-top: 44px;
+  }
+
+  .diagram {
+    --spine: 28px;
+    grid-template-columns: 1fr;
+    row-gap: var(--bgap);
+  }
+
+  .root {
+    display: grid;
+    grid-template-columns: auto 1fr minmax(220px, 300px);
+    align-items: center;
+    gap: 8px 24px;
+  }
+
+  .root .avatar {
+    margin: 0;
+  }
+
+  .root .spec {
+    margin: 0;
+  }
+
+  .root .portOut {
+    display: none;
+  }
+
+  .root::after {
+    top: 100%;
+    left: var(--spine);
+    width: 0;
+    height: var(--bgap);
+    border-top: 0;
+    border-left: var(--stroke) solid var(--cyan);
+  }
+
+  .branches {
+    margin-left: calc(var(--spine) + var(--bh));
+  }
+
+  .branch {
+    grid-template-columns: 190px 1fr;
+  }
+
+  .branch:first-child::before {
+    top: 0;
+  }
+
+  .branch:only-child::before {
+    display: block;
+    top: 0;
+    bottom: 50%;
+  }
+}
+
+/* ── Phone: indented tree ──────────────────────────────────────────────── */
+@media (max-width: 820px) {
+  .board {
+    padding: 30px 14px 18px;
+  }
+
+  .legend {
+    position: static;
+    transform: none;
+    background: transparent;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin-bottom: 18px;
+  }
+
+  .diagram {
+    --bh: 14px;
+    --lh: 14px;
+    --spine: 16px;
+    --spine-l: 16px;
+    --bgap: 22px;
+    --lgap: 10px;
+  }
+
+  .root {
+    grid-template-columns: auto 1fr;
+    padding: 14px;
+  }
+
+  .root .avatar {
+    width: 56px;
+    height: 56px;
+  }
+
+  .root .spec {
+    grid-column: 1 / -1;
+  }
+
+  .branch {
+    grid-template-columns: 1fr;
+    row-gap: var(--lgap);
+  }
+
+  /* trunk runs alongside the whole branch, except after the last one */
+  .branch::before,
+  .branch:first-child::before {
+    top: calc(var(--bgap) / -2);
+    bottom: calc(var(--bgap) / -2);
+  }
+
+  .branch:first-child::before {
+    top: 0;
+  }
+
+  .branch:last-child::before,
+  .branch:only-child::before {
+    display: none;
+  }
+
+  /* └─ elbow into each domain */
+  .domain::before {
+    top: calc(var(--bgap) / -2);
+    height: calc(50% + var(--bgap) / 2);
+    border-top: 0;
+    border-left: var(--stroke) solid var(--wire);
+    border-bottom: var(--stroke) solid var(--wire);
+  }
+
+  .branch:first-child .domain::before {
+    top: 0;
+    height: 50%;
+  }
+
+  .domain .portOut {
+    display: none;
+  }
+
+  /* drop from the domain into its projects */
+  .domain::after {
+    top: 100%;
+    left: var(--spine-l);
+    width: 0;
+    height: var(--lgap);
+    border-top: 0;
+    border-left: var(--stroke) solid var(--wire);
+  }
+
+  .leaves {
+    margin-left: calc(var(--spine-l) + var(--lh));
+  }
+
+  .leaf::before {
+    top: calc(var(--lgap) / -2);
+    bottom: calc(var(--lgap) / -2);
+  }
+
+  .leaf:first-child::before {
+    top: 0;
+  }
+
+  .leaf:last-child::before,
+  .leaf:only-child::before {
+    display: none;
+  }
+
+  .leaf::after {
+    top: calc(var(--lgap) / -2);
+    height: calc(50% + var(--lgap) / 2);
+    border-top: 0;
+    border-left: var(--stroke) solid var(--wire);
+    border-bottom: var(--stroke) var(--tick-style) var(--tick);
+  }
+
+  .leaf:first-child::after {
+    top: 0;
+    height: 50%;
+  }
+
+  .node {
+    padding: 12px 14px;
+  }
+}

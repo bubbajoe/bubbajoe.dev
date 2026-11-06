@@ -1,7 +1,7 @@
 {
   "name": "bubbajoe.dev",
-  "engine": {
-    "node": ">=20.11"
+  "engines": {
+    "node": "24.x"
   },
   "scripts": {
     "dev": "next dev",

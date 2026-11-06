@@ -1,32 +1,8 @@
-import Layout from '@/components/Layout'
+import Article from '@/components/Article'
 import { getAllBlogIds, getBlogData } from '@/lib/blogs'
-import Head from 'next/head'
-import DateDisplayer from '@/components/DateDisplayer'
-import utilStyles from '@/styles/utils.module.css'
-import { useEffect } from 'react'
-import mermaid from 'mermaid'
 
 export default function BlogEntry({ blogData }) {
-  useEffect(() => {
-    mermaid.run({
-      querySelector: '.language-mermaid',
-    })
-  }, [blogData])
-  return (
-    <Layout title="blog" backName="blog" backHref="/blog">
-      <Head>
-        <title>{`${blogData.title} | bubbajoe.dev`}</title>
-      </Head>
-      <article>
-        <h1 className={utilStyles.headingXl}>{blogData.title}</h1>
-        <div className={utilStyles.lightText}>
-          <DateDisplayer label="created" dateString={blogData.created} />
-          <DateDisplayer style={{float: 'right'}} label="updated" dateString={blogData.updated} />
-        </div>
-        <div dangerouslySetInnerHTML={{ __html: blogData.contentHtml }} />
-      </article>
-    </Layout>
-  )
+  return <Article kind="blog" data={blogData} />
 }
 
 export async function getStaticPaths() {
