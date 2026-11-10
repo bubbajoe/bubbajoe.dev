@@ -1,6 +1,8 @@
 .box {
   display: inline-grid;
   max-width: 100%;
+  /* ~13% smaller than the surrounding heading (the name), scales with its clamp(). */
+  font-size: 0.87em;
 }
 
 .ghost,
