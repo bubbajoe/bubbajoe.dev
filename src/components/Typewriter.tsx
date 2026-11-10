@@ -32,13 +32,15 @@ export default function Typewriter({ phrases }: Props) {
   const first = phrases[0] ?? ''
   const longest = phrases.reduce((a, b) => (b.length > a.length ? b : a), '')
 
-  const [text, setText] = useState(first)
+  // Render an ellipsis on the server and on the first client paint; the first
+  // phrase is typed only after the animation starts.
+  const [text, setText] = useState('…')
   // Start index of the highlighted range (highlight always runs to the end), or null.
   const [selFrom, setSelFrom] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
 
   useEffect(() => {
-    if (phrases.length < 2) return
+    if (!phrases.length) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setText(phrases[phrases.length - 1])
       return
@@ -53,6 +55,18 @@ export default function Typewriter({ phrases }: Props) {
 
     ;(async () => {
       await sleep(HOLD_MS)
+      // Clear the placeholder before typing the first phrase.
+      setBusy(true)
+      setText('')
+      await sleep(AFTER_DELETE_MS)
+      for (let c = 1; c <= first.length && !cancelled; c++) {
+        setText(first.slice(0, c))
+        await sleep(keyDelay(first[c - 1]))
+      }
+      setBusy(false)
+      if (phrases.length < 2 || cancelled) return
+      await sleep(HOLD_MS)
+
       for (let i = 1; i < phrases.length && !cancelled; i++) {
         const current = phrases[i - 1]
         const next = phrases[i]
